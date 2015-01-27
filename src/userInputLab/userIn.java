@@ -25,41 +25,38 @@ public class userIn
 	{
 		int selection = 0;
 		boolean again = true;
-		this.displayMenu();
-		System.out.println("Please choose what you would like to do: ");
-		selection =userIn.nextInt();
-		
-		switch(selection)
+		while(again)
 		{
-		case 1:
-			this.setPrecision();
-			System.out.println("");
-			break;
-		case 2:
-			this.getNumbers();
-			this.getMostFrequent();
-			this.getAverage();
-			System.out.println("");
-			break;
-		case 3:
-			this.performfloatOps();
-			System.out.println("");
-			break;
-		case 4:
-			again = false;
-			System.out.println("");
-			break;
-		default:
-			System.out.println("");
+			Scanner userInMenu = new Scanner(System.in);
+			this.displayMenu();
+			System.out.println("\nPlease choose what you would like to do: ");
+			selection = Integer.parseInt(userIn.next());
+			
+			switch(selection)
+			{
+			case 1:
+				this.setPrecision();
+				System.out.println("");
 				break;
-		}
-		if(again)
-		{
-			this.getInput();
-		}
-		else
-		{
-			return;
+			case 2:
+				this.getNumbers();
+				this.getMostFrequent();
+				System.out.format("\nAverage: %2d", (int)this.getAverage());
+				System.out.println("");
+				System.out.println("");
+				break;
+			case 3:
+				this.performfloatOps();
+				System.out.println("");
+				break;
+			case 4:
+				again = false;
+				System.out.println("");
+				break;
+			default:
+				System.out.println("");
+					break;
+			}
 		}
 	}
 	
@@ -74,21 +71,15 @@ public class userIn
 		
 		tempList.addAll(Arrays.asList(temp.split("\\s*,\\s*")));
 		
-		userIn.useDelimiter(",");
-		
 		for(k = 0; k < tempList.size(); k++)
 		{
 			inNumbers.add(Float.parseFloat(tempList.get(k)));
 		}		
 	}
 	
-	public void getfloats()
-	{
-		
-	}
-	
 	public void quit()
 	{
+		System.out.println("Goodbye!");
 		return;
 	}
 	
@@ -128,7 +119,7 @@ public class userIn
 		System.out.println("");
 	}
 	
-	public void getAverage()
+	public float getAverage()
 	{
 		int k;
 		float sum = 0;
@@ -138,25 +129,37 @@ public class userIn
 			sum += inNumbers.get(k);
 		}
 		
-		BigDecimal dc = new BigDecimal(sum/inNumbers.size());
-		dc = dc.setScale(precision,BigDecimal.ROUND_CEILING);
-		System.out.format("\nAverage: %s", dc);
-		System.out.println("");
+		return (sum/inNumbers.size());
 	}
 	
-	public void getStdDeviation()
+	public float getStdDeviation()
 	{
+		int k;
+		float std = 0;
+				
+		for(k = 0; k < inNumbers.size(); k++)
+		{
+			std += (float)Math.pow((inNumbers.get(k)-this.getAverage()), 2);
+		}
 		
+		std = (float)Math.sqrt(std/(inNumbers.size()-1));
 		
-		System.out.println("\nStandard Deviation: ");
-		System.out.println("");
+		return std;
 	}
 	
 	public void performfloatOps()
 	{
 		this.getNumbers();
-		this.getAverage();
-		this.getStdDeviation();		
+		
+		BigDecimal dc = new BigDecimal(this.getAverage());
+		dc = dc.setScale(precision,BigDecimal.ROUND_CEILING);
+		System.out.format("\nAverage: %s", dc);
+		System.out.println("");
+		
+		BigDecimal standrdDv = new BigDecimal(this.getStdDeviation());
+		standrdDv = standrdDv.setScale(precision, BigDecimal.ROUND_CEILING); 
+		System.out.format("\nStandard Deviation: %s", standrdDv);
+		System.out.println("");		
 	}
 	
 

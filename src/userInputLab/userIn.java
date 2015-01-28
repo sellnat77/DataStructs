@@ -1,3 +1,11 @@
+/* Class: Data structures and algorithms
+ * Name: Russell Tan
+ * Date: 1/28/2015
+ * Description: Takes a list of ints or reals numbers
+ * 				Displays the most frequent in the int list
+ * 				Displays avg and std deviation of real number list
+ */
+
 package userInputLab;
 
 import java.math.BigDecimal;
@@ -5,13 +13,15 @@ import java.util.*;
 
 public class userIn 
 {
-
+	//Private members
 	private int precision;
 	private ArrayList<Float> inNumbers = new ArrayList<Float>();
 	private Scanner userIn = new Scanner(System.in);
 	
+	//Default constructor
 	userIn(){}
 	
+	//Static menu
 	public void displayMenu()
 	{
 		System.out.println("\n1. Set number of decimal places.");
@@ -20,10 +30,12 @@ public class userIn
 		System.out.println("4. Exit program.");
 	}
 	
+	//Repeats the static menu and calls necessary functions
 	public void getInput()
 	{
 		int selection = 0;
 		boolean again = true;
+		
 		while(again)
 		{
 			this.displayMenu();
@@ -37,12 +49,14 @@ public class userIn
 				System.out.println("");
 				break;
 			case 2:
+				inNumbers.clear();
 				this.getNumbers();
 				this.getMostFrequent();
 				System.out.println("");
 				System.out.println("");
 				break;
 			case 3:
+				inNumbers.clear();
 				this.performfloatOps();
 				System.out.println("");
 				break;
@@ -52,13 +66,17 @@ public class userIn
 				break;
 			default:
 				System.out.println("");
-					break;
+				break;
 			}
 		}
 	}
 	
+	//Prompts user for comma delimited list of numbers
 	public void getNumbers()
 	{
+		//Using a temporary arrList to take input as a string
+		//Split with regex to account for whitespace and 
+		//add all values(Strings) to tempList
 		int k;
 		System.out.println("Please enter a comma delimited list of numbers");
 		
@@ -68,18 +86,21 @@ public class userIn
 		
 		tempList.addAll(Arrays.asList(temp.split("\\s*,\\s*")));
 		
+		//Parse values(Strings) as floats to store in private arrList for processing
 		for(k = 0; k < tempList.size(); k++)
 		{
 			inNumbers.add(Float.parseFloat(tempList.get(k)));
 		}		
 	}
 	
+	//Display exit message
 	public void quit()
 	{
 		System.out.println("Goodbye!");
 		return;
 	}
 	
+	//Set number of dec. places
 	public void setPrecision()
 	{
 		System.out.println("Please enter the number of deciaml places you would like to display");
@@ -87,6 +108,9 @@ public class userIn
 		System.out.println("");
 	}
 	
+	//Displays most frequently occuring value in list
+	//As well as how many times it occurs and what location
+	//It first appears
 	public void getMostFrequent()
 	{
 		int k,m;
@@ -94,15 +118,11 @@ public class userIn
 		int maxFreq = 0;
 		int tempLoc = 0;
 		
+		//Gets frequency by taking first value as most frequent, swaps if another value is more frequent
+		//Location is found by setting the index the first time there is a swap
 		for(k = 0; k < inNumbers.size(); k++)
-		{
-			System.out.println(""+inNumbers.get(k));
-					
-			for(m = 0; m < inNumbers.size(); m++)
-			{
-				tempFreq = Collections.frequency(inNumbers, inNumbers.get(k));
-				
-			}	
+		{	
+			tempFreq = Collections.frequency(inNumbers, inNumbers.get(k));	
 			
 			if(tempFreq > maxFreq)
 			{
@@ -112,12 +132,13 @@ public class userIn
 			tempFreq = 0;
 		}
 		
-		System.out.println("Max occurances: "+maxFreq);
-		System.out.println("At location: " + tempLoc);
-		System.out.println("Most frequent: " + (int)(Math.round(inNumbers.get(tempLoc))));
+		System.out.println("\nMax occurances  : " + maxFreq);
+		System.out.println("First spotted at: " + tempLoc);
+		System.out.println("Most frequent   : " + (int)(Math.round(inNumbers.get(tempLoc))));
 		System.out.println("");
 	}
 	
+	//Returns average of the private arrList
 	public float getAverage()
 	{
 		int k;
@@ -131,30 +152,33 @@ public class userIn
 		return (sum/inNumbers.size());
 	}
 	
+	//Retruns the std deviation of arrList
 	public float getStdDeviation()
 	{
 		int k;
 		float std =0;
-		float numToSquare = 0;
 		float avg = this.getAverage();
 				
+		//Summation of difference of each value squared
 		for(k = 0; k < inNumbers.size(); k++)
-		{
-			numToSquare = inNumbers.get(k)-avg;
-			
-			std += (float)(Math.pow(numToSquare, 2));
+		{			
+			std += (float)(Math.pow((inNumbers.get(k)-avg), 2));
 		}
 		
+		//Divided by size
 		std = std/inNumbers.size();
 		
-		
+		//Square root of result
 		return (float)Math.sqrt(std);
 	}
 	
+	//Retrieves numbers from user, displays average given the precision
+	//Displays the std deviation given the precision
 	public void performfloatOps()
 	{
 		this.getNumbers();
 		
+		//Using Big Decimal to establish a global precision from the private member
 		BigDecimal dc = new BigDecimal(this.getAverage());
 		dc = dc.setScale(precision,BigDecimal.ROUND_FLOOR);
 		System.out.format("\nAverage: %s", dc);

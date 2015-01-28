@@ -113,7 +113,7 @@ public class userIn
 	//It first appears
 	public void getMostFrequent()
 	{
-		int k,m;
+		int k;
 		int tempFreq= 0;
 		int maxFreq = 0;
 		int tempLoc = 0;
@@ -152,7 +152,7 @@ public class userIn
 		return (sum/inNumbers.size());
 	}
 	
-	//Retruns the std deviation of arrList
+	//Returns the std deviation of arrList
 	public float getStdDeviation()
 	{
 		int k;

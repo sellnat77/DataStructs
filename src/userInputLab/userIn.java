@@ -5,19 +5,18 @@ import java.util.*;
 
 public class userIn 
 {
-	private int intInput;
-	private float doubInput;
+
 	private int precision;
-	private String precisionString = "%.";
 	private ArrayList<Float> inNumbers = new ArrayList<Float>();
 	private Scanner userIn = new Scanner(System.in);
+	
 	userIn(){}
 	
 	public void displayMenu()
 	{
 		System.out.println("\n1. Set number of decimal places.");
-		System.out.println("2. Enter integers and get mnost frequent.");
-		System.out.println("3. Enter real numbers andget std deviation and average.");
+		System.out.println("2. Enter integers and get most frequent.");
+		System.out.println("3. Enter real numbers and get std deviation and average.");
 		System.out.println("4. Exit program.");
 	}
 	
@@ -27,7 +26,6 @@ public class userIn
 		boolean again = true;
 		while(again)
 		{
-			Scanner userInMenu = new Scanner(System.in);
 			this.displayMenu();
 			System.out.println("\nPlease choose what you would like to do: ");
 			selection = Integer.parseInt(userIn.next());
@@ -51,7 +49,7 @@ public class userIn
 				break;
 			case 4:
 				again = false;
-				System.out.println("");
+				this.quit();
 				break;
 			default:
 				System.out.println("");
@@ -97,6 +95,7 @@ public class userIn
 		int maxFreq = 0;
 		int tempLoc = 0;
 		Collections.sort(inNumbers);
+		
 		for(k = 0; k < inNumbers.size(); k++)
 		{
 			System.out.println(""+inNumbers.get(k));
@@ -106,6 +105,7 @@ public class userIn
 				tempFreq = Collections.frequency(inNumbers, inNumbers.get(k));
 				
 			}	
+			
 			if(tempFreq > maxFreq)
 			{
 				maxFreq = tempFreq;
@@ -113,6 +113,7 @@ public class userIn
 			}
 			tempFreq = 0;
 		}
+		
 		System.out.println("Max occurances: "+maxFreq);
 		System.out.println("At location: " + tempLoc);
 		System.out.println("Most frequent: " + (int)(Math.round(inNumbers.get(tempLoc))));
@@ -135,16 +136,19 @@ public class userIn
 	public float getStdDeviation()
 	{
 		int k;
-		float std = 0;
+		float std =0;
+		float numToSquare = 0;
+		float avg = this.getAverage();
 				
 		for(k = 0; k < inNumbers.size(); k++)
 		{
-			std += (float)Math.pow((inNumbers.get(k)-this.getAverage()), 2);
+			numToSquare = inNumbers.get(k)-avg;
+			
+			std += ((float)(Math.pow(numToSquare, 2)))/inNumbers.size()*1.0;
 		}
 		
-		std = (float)Math.sqrt(std/(inNumbers.size()-1));
 		
-		return std;
+		return (float)Math.sqrt(std);
 	}
 	
 	public void performfloatOps()
@@ -152,12 +156,12 @@ public class userIn
 		this.getNumbers();
 		
 		BigDecimal dc = new BigDecimal(this.getAverage());
-		dc = dc.setScale(precision,BigDecimal.ROUND_CEILING);
+		dc = dc.setScale(precision,BigDecimal.ROUND_FLOOR);
 		System.out.format("\nAverage: %s", dc);
 		System.out.println("");
 		
 		BigDecimal standrdDv = new BigDecimal(this.getStdDeviation());
-		standrdDv = standrdDv.setScale(precision, BigDecimal.ROUND_CEILING); 
+		standrdDv = standrdDv.setScale(precision, BigDecimal.ROUND_FLOOR); 
 		System.out.format("\nStandard Deviation: %s", standrdDv);
 		System.out.println("");		
 	}

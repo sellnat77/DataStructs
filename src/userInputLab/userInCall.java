@@ -7,8 +7,6 @@ public class userInCall {
 		userIn myUser = new userIn();
 		
 		myUser.getInput();
-		// TODO Auto-generated method stub
-
 	}
 
 }

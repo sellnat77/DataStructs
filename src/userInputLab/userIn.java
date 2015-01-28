@@ -39,7 +39,6 @@ public class userIn
 			case 2:
 				this.getNumbers();
 				this.getMostFrequent();
-				System.out.format("\nAverage: %2d", (int)this.getAverage());
 				System.out.println("");
 				System.out.println("");
 				break;
@@ -61,7 +60,7 @@ public class userIn
 	public void getNumbers()
 	{
 		int k;
-		System.out.println("Please enter a comma delimited list of integers");
+		System.out.println("Please enter a comma delimited list of numbers");
 		
 		String temp = userIn.next();
 		
@@ -94,7 +93,6 @@ public class userIn
 		int tempFreq= 0;
 		int maxFreq = 0;
 		int tempLoc = 0;
-		Collections.sort(inNumbers);
 		
 		for(k = 0; k < inNumbers.size(); k++)
 		{
@@ -144,8 +142,10 @@ public class userIn
 		{
 			numToSquare = inNumbers.get(k)-avg;
 			
-			std += ((float)(Math.pow(numToSquare, 2)))/inNumbers.size()*1.0;
+			std += (float)(Math.pow(numToSquare, 2));
 		}
+		
+		std = std/inNumbers.size();
 		
 		
 		return (float)Math.sqrt(std);
@@ -165,6 +165,4 @@ public class userIn
 		System.out.format("\nStandard Deviation: %s", standrdDv);
 		System.out.println("");		
 	}
-	
-
 }

@@ -117,11 +117,14 @@ public class userIn
 		int tempFreq= 0;
 		int maxFreq = 0;
 		int tempLoc = 0;
+		float numbersInArray[] = new float[inNumbers.size()];
+		
 		
 		//Gets frequency by taking first value as most frequent, swaps if another value is more frequent
 		//Location is found by setting the index the first time there is a swap
 		for(k = 0; k < inNumbers.size(); k++)
 		{	
+			numbersInArray[k] = inNumbers.get(k);
 			tempFreq = Collections.frequency(inNumbers, inNumbers.get(k));	
 			
 			if(tempFreq > maxFreq)

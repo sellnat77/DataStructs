@@ -72,30 +72,45 @@ public class loopSimulator
 	
 	public void simulateLoops()
 	{
-		int k;
+		int k = 0;
+		int val = 1;
 		int loopIndex = 0;
 		incrementor = new int[this.getLoops()];
+		boolean moveBack = false;
+		
+		for(int i = 0; i < this.getLoops(); i++)
+		{
+			incrementor[i] = 0;
+			
+		}
 		
 		long time = System.nanoTime();
-		
-		for(k = 0; k < this.getIterations(); k++)
+		System.out.println("0.) " +Arrays.toString(incrementor));
+		while(k < this.getLoops())
 		{
+			incrementor[k]++;
+			moveBack = false;
+			System.out.println(val+".) " + Arrays.toString(incrementor));
 			
-			if(incrementor[loopIndex] == this.getIterations())
+			if(incrementor[k] < this.getIterations()+1)
 			{
-				incrementor[loopIndex] = 0;
-				loopIndex++;
-				incrementor[loopIndex]++;
-				loopIndex--;
+				moveBack = false;
 				k = 0;
+			}
+			else if(incrementor[k] == this.getIterations()-2 && k > 1)
+			{
+				k--;
+			}
+			else 
+			{
+				incrementor[k] = 0;
+				k++;
 				
 			}
-			if(loopIndex == this.getLoops())
-			{
-				break;
-			}
-			incrementor[loopIndex] += 1;
+			val++;
 		}
+		System.out.println(Arrays.toString(incrementor));
+		
 		System.out.println("Process took :" + (int)(System.nanoTime()-time) );
 		
 		

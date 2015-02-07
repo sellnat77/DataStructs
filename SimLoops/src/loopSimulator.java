@@ -86,23 +86,23 @@ public class loopSimulator
 		
 		long time = System.nanoTime();
 		while(k < this.getLoops())
-		{
-			System.out.printf("%4d.) %s\n",val,Arrays.toString(incrementor));
+		{	
+			
+			
 			incrementor[k]++;			
-			if(incrementor[k] < this.getIterations()-1)
+			if(incrementor[k] < this.getIterations()+1)
 			{
-				moveBack = false;
+				System.out.printf("%4d.) %s\n",val,Arrays.toString(incrementor));
 				k = 0;
 			}
-			else if(incrementor[k] == this.getIterations() && k > 1)
+			else if(incrementor[k] == this.getIterations() && k >= 1)
 			{
 				k--;
 			}
 			else
 			{
-				
-				k++;
 				incrementor[k] = 0;
+				k++;
 			}
 			val++;
 		}

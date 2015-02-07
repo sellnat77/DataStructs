@@ -85,14 +85,13 @@ public class loopSimulator
 		}
 		
 		long time = System.nanoTime();
+		System.out.printf("   0.) %s\n",Arrays.toString(incrementor));
 		while(k < this.getLoops())
 		{	
-			
-			
 			incrementor[k]++;			
 			if(incrementor[k] < this.getIterations()+1)
 			{
-				System.out.printf("%4d.) %s\n",val,Arrays.toString(incrementor));
+				//System.out.printf("%4d.) %s\n",val,Arrays.toString(incrementor));
 				k = 0;
 			}
 			else if(incrementor[k] == this.getIterations() && k >= 1)
@@ -107,12 +106,7 @@ public class loopSimulator
 			val++;
 		}
 		
-		System.out.println("Process took :" + (int)(System.nanoTime()-time) );
-		
-		
-		
-		
-		
+		System.out.println("\nProcess took : " + (double)((System.nanoTime()-time)/1000000) + " milliseconds" );
 	}
 	
 	public void quit()

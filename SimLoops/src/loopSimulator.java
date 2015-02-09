@@ -94,6 +94,7 @@ public class loopSimulator
 	public void simulateLoops()
 	{		
 		int k = 0;
+		int val = 1;
 		boolean alreadyExecuted = false;
 		
 		for(int i = 0; i < this.getLoops(); i++)
@@ -103,7 +104,7 @@ public class loopSimulator
 		}
 
 		long time = System.nanoTime();
-		System.out.printf("\t%s\n",Arrays.toString(incrementor));
+		System.out.printf("\t%4d.)%s\n",val,Arrays.toString(incrementor));
 
 		//While the index is less than the desired loops
 		while(k < this.getLoops())
@@ -111,11 +112,12 @@ public class loopSimulator
 			//Ai < n-1
 			if(incrementor[k] < this.getIterations()-1)
 			{
+				val++;
 				incrementor[k]++;
 				
 				if(this.getDisplay())
 				{		
-					System.out.printf("\t%s\n",Arrays.toString(incrementor));
+					System.out.printf("\t%4d.)%s\n",val,Arrays.toString(incrementor));
 				}
 				//Stays in this statement until Ai == n-1
 				k = 0;
@@ -123,18 +125,22 @@ public class loopSimulator
 			//If Ai == n and i is less than the number of loops, move index back one
 			else if(incrementor[k] == this.getIterations() && k < this.getLoops())
 			{
+				val--;
 				k--;
 			}
 			//If last Ai == n-1 reset index to zero once and reset first value to 0
 			else if(incrementor[this.getLoops()-1] == this.getIterations()-1 && !alreadyExecuted)
 			{
 				alreadyExecuted = true;
+				k = 1;
+				incrementor[k] = 1;
 				k = 0;
 				incrementor[k] = 0;
 			}
 			//Otherwise, reset Ai to 0 and move the index forward
 			else
 			{
+				
 				incrementor[k] = 0;
 				k++;
 			}		

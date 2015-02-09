@@ -87,7 +87,7 @@ public class loopSimulator
 		int k = 0;
 		int val = 1;
 		incrementor = new int[this.getLoops()];
-
+		boolean alreadyExecuted = false;
 		for(int i = 0; i < this.getLoops(); i++)
 		{
 			incrementor[i] = 0;
@@ -100,27 +100,35 @@ public class loopSimulator
 		while(k < this.getLoops())
 		{
 			incrementor[k]++;
-			System.out.printf("%4d.) %s\n",val,Arrays.toString(incrementor));
+			if(this.getDisplay())
+			{
+				System.out.printf("%4d.) %s\n",val,Arrays.toString(incrementor));
+			}
 			val++;
 
 			if(incrementor[k] < this.getIterations())
 			{
-				if(this.getDisplay())
-				{
-					//System.out.printf("%4d.) %s\n",val,Arrays.toString(incrementor));
 
-				}
 				k = 0;
 			}
 			else if(incrementor[k] == this.getIterations()-1 && k < this.getLoops())
 			{
 				k--;
 			}
+			else if(incrementor[this.getLoops()-1] == this.getIterations() && !alreadyExecuted)
+			{
+				System.out.println("CAUGHT");
+
+				alreadyExecuted = true;
+				k = 0;
+				incrementor[k] = 1;
+			}
 			else
 			{
 				incrementor[k] = 1;
 				k++;
 			}
+
 
 		}
 

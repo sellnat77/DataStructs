@@ -10,10 +10,10 @@ public class loopSimulator
 
 	public void showMenu()
 	{
-		System.out.println("\n1. Enter number of loops desired");
-		System.out.println("2. Enter number of iterations per loop");
-		System.out.println("3. Simulate nested loops");
-		System.out.println("4. Simulate nested loops with display");
+		System.out.println("\n1. Enter length of register");
+		System.out.println("2. Enter capacity of register");
+		System.out.println("3. Simulate filling up register");
+		System.out.println("4. Simulate filling up register with display");
 		System.out.println("5. Exit program.");
 	}
 
@@ -31,12 +31,12 @@ public class loopSimulator
 			switch(selection)
 			{
 			case 1:
-				System.out.println("Please enter the number of loops: ");
+				System.out.println("Please enter the length of the register: ");
 				this.setLoops(userIn.nextInt());
 				incrementor = new int[this.getLoops()];
 				break;
 			case 2:
-				System.out.println("Please enter the iterations: ");
+				System.out.println("Please enter the capacity: ");
 				this.setIterations(userIn.nextInt());
 				break;
 			case 3:
@@ -105,33 +105,37 @@ public class loopSimulator
 		long time = System.nanoTime();
 		System.out.printf("\t%s\n",Arrays.toString(incrementor));
 
+		//While the index is less than the desired loops
 		while(k < this.getLoops())
 		{
-			if(incrementor[k] < this.getIterations())
+			//Ai < n-1
+			if(incrementor[k] < this.getIterations()-1)
 			{
 				incrementor[k]++;
+				
 				if(this.getDisplay())
 				{		
 					System.out.printf("\t%s\n",Arrays.toString(incrementor));
 				}
+				//Stays in this statement until Ai == n-1
 				k = 0;
 			}
-			else if(incrementor[k] == this.getIterations()-1 && k < this.getLoops())
+			//If Ai == n and i is less than the number of loops, move index back one
+			else if(incrementor[k] == this.getIterations() && k < this.getLoops())
 			{
-				incrementor[k]++;
 				k--;
 			}
-			else if(incrementor[this.getLoops()-1] == this.getIterations() && !alreadyExecuted)
+			//If last Ai == n-1 reset index to zero once and reset first value to 0
+			else if(incrementor[this.getLoops()-1] == this.getIterations()-1 && !alreadyExecuted)
 			{
-				incrementor[k]++;
 				alreadyExecuted = true;
 				k = 0;
-				incrementor[k] = 1;
+				incrementor[k] = 0;
 			}
+			//Otherwise, reset Ai to 0 and move the index forward
 			else
 			{
-				incrementor[k]++;
-				incrementor[k] = 1;
+				incrementor[k] = 0;
 				k++;
 			}		
 		}

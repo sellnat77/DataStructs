@@ -33,6 +33,7 @@ public class loopSimulator
 			case 1:
 				System.out.println("Please enter the number of loops: ");
 				this.setLoops(userIn.nextInt());
+				incrementor = new int[this.getLoops()];
 				break;
 			case 2:
 				System.out.println("Please enter the iterations: ");
@@ -81,13 +82,20 @@ public class loopSimulator
 	{
 		return this.iterations;
 	}
-
-	public void simulateLoops()
+	public void print()
 	{
+		int k;
+		
+		for(k = 0; k < incrementor.length; k++)
+		{
+			System.out.printf("%4d.) %s\n",k,Arrays.toString(incrementor));
+		}
+	}
+	public void simulateLoops()
+	{		
 		int k = 0;
-		int val = 1;
-		incrementor = new int[this.getLoops()];
 		boolean alreadyExecuted = false;
+		
 		for(int i = 0; i < this.getLoops(); i++)
 		{
 			incrementor[i] = 0;
@@ -95,47 +103,42 @@ public class loopSimulator
 		}
 
 		long time = System.nanoTime();
-		System.out.printf("   0.) %s\n",Arrays.toString(incrementor));
+		System.out.printf("\t%s\n",Arrays.toString(incrementor));
 
 		while(k < this.getLoops())
 		{
-			incrementor[k]++;
-			if(this.getDisplay())
-			{
-				System.out.printf("%4d.) %s\n",val,Arrays.toString(incrementor));
-			}
-			val++;
-
 			if(incrementor[k] < this.getIterations())
 			{
-
+				incrementor[k]++;
+				if(this.getDisplay())
+				{		
+					System.out.printf("\t%s\n",Arrays.toString(incrementor));
+				}
 				k = 0;
 			}
 			else if(incrementor[k] == this.getIterations()-1 && k < this.getLoops())
 			{
+				incrementor[k]++;
 				k--;
 			}
 			else if(incrementor[this.getLoops()-1] == this.getIterations() && !alreadyExecuted)
 			{
-				System.out.println("CAUGHT");
-
+				incrementor[k]++;
 				alreadyExecuted = true;
 				k = 0;
 				incrementor[k] = 1;
 			}
 			else
 			{
+				incrementor[k]++;
 				incrementor[k] = 1;
 				k++;
-			}
-
-
+			}		
 		}
-
 		System.out.println("\nProcess took : " + (double)((System.nanoTime()-time)/1000000) + " milliseconds" );
 		this.setDisplay(false);
 	}
-
+	
 	public void quit()
 	{
 		System.out.println("Good Bye!");

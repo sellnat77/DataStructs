@@ -1,6 +1,5 @@
 import java.util.*;
 
-
 public class loopSimulator
 {
 	Scanner userIn = new Scanner(System.in);
@@ -16,15 +15,6 @@ public class loopSimulator
 		System.out.println("3. Simulate nested loops");
 		System.out.println("4. Simulate nested loops with display");
 		System.out.println("5. Exit program.");
-	}
-
-	public void setDisplay(boolean set)
-	{
-		display = set;
-	}
-	public boolean getDisplay()
-	{
-		return display;
 	}
 
 	public void getInput()
@@ -66,6 +56,10 @@ public class loopSimulator
 		}
 	}
 
+	public void setDisplay(boolean set)
+	{
+		display = set;
+	}
 	public void setLoops(int loops)
 	{
 		this.numberOfLoops = loops;
@@ -75,11 +69,14 @@ public class loopSimulator
 		this.iterations = iter;
 	}
 
+	public boolean getDisplay()
+	{
+		return this.display;
+	}
 	public int getLoops()
 	{
 		return this.numberOfLoops;
 	}
-
 	public int getIterations()
 	{
 		return this.iterations;
@@ -89,7 +86,6 @@ public class loopSimulator
 	{
 		int k = 0;
 		int val = 1;
-		int loopIndex = 0;
 		incrementor = new int[this.getLoops()];
 
 		for(int i = 0; i < this.getLoops(); i++)
@@ -100,39 +96,40 @@ public class loopSimulator
 
 		long time = System.nanoTime();
 		System.out.printf("   0.) %s\n",Arrays.toString(incrementor));
+
 		while(k < this.getLoops())
 		{
 			incrementor[k]++;
-			if(incrementor[k] < this.getIterations()+1)
+			System.out.printf("%4d.) %s\n",val,Arrays.toString(incrementor));
+			val++;
+
+			if(incrementor[k] < this.getIterations())
 			{
 				if(this.getDisplay())
 				{
-					System.out.printf("%4d.) %s\n",val,Arrays.toString(incrementor));
+					//System.out.printf("%4d.) %s\n",val,Arrays.toString(incrementor));
+
 				}
 				k = 0;
 			}
-			else if(incrementor[k] == this.getIterations() && k >= 1)
+			else if(incrementor[k] == this.getIterations()-1 && k < this.getLoops())
 			{
 				k--;
 			}
 			else
 			{
-				incrementor[k] = 0;
+				incrementor[k] = 1;
 				k++;
 			}
-			val++;
+
 		}
 
 		System.out.println("\nProcess took : " + (double)((System.nanoTime()-time)/1000000) + " milliseconds" );
 		this.setDisplay(false);
 	}
 
-
 	public void quit()
 	{
 		System.out.println("Good Bye!");
 	}
-
-
-
 }

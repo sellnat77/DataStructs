@@ -132,6 +132,7 @@ public class loopSimulator
 			else if(incrementor[this.getLoops()-1] == this.getIterations()-1 && !alreadyExecuted)
 			{
 				alreadyExecuted = true;
+				//Catch extra step
 				k = 1;
 				incrementor[k] = 1;
 				k = 0;

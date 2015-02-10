@@ -95,6 +95,7 @@ public class loopSimulator
 	{		
 		int k = 0;
 		int val = 1;
+		int length = (int)(Math.pow(this.getLoops(),this.getIterations()))+1;
 		boolean alreadyExecuted = false;
 		
 		for(int i = 0; i < this.getLoops(); i++)
@@ -107,7 +108,7 @@ public class loopSimulator
 		System.out.printf("\t%4d.)%s\n",val,Arrays.toString(incrementor));
 
 		//While the index is less than the desired loops
-		while(k < this.getLoops())
+		while(val < length)
 		{
 			//Ai < n-1
 			if(incrementor[k] < this.getIterations()-1)
@@ -141,6 +142,10 @@ public class loopSimulator
 			//Otherwise, reset Ai to 0 and move the index forward
 			else
 			{
+				if(k == this.getIterations()-1)
+				{
+					break;
+				}
 				
 				incrementor[k] = 0;
 				k++;

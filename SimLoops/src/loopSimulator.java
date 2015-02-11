@@ -93,9 +93,10 @@ public class loopSimulator
 	}
 	public void simulateLoops()
 	{		
-		int k = 0;
-		int val = 1;
-		int length = (Math.abs((int)Math.pow(this.getLoops(),this.getIterations())))-1;
+		int loopIndex = 0;
+		int numberOfLoops = this.getLoops();
+		int numberOfIterations = this.getIterations();
+		boolean isDisplaying = this.getDisplay();
 		boolean alreadyExecuted = false;
 		
 		for(int i = 0; i < this.getLoops(); i++)
@@ -108,47 +109,36 @@ public class loopSimulator
 		System.out.printf("\t%s\n",Arrays.toString(incrementor));
 
 		//While the index is less than the desired loops
-		while(k < this.getLoops())
+		while(loopIndex < numberOfLoops)
 		{
-
-
 			//Ai < n-1
-			if(incrementor[k] < this.getIterations()-1)
+			if(incrementor[loopIndex] < numberOfIterations-1)
 			{
-				val++;
-				incrementor[k]++;
-				
-				if(this.getDisplay())
+				incrementor[loopIndex]++;	
+				if(isDisplaying)
 				{		
 					System.out.printf("\t%s\n",Arrays.toString(incrementor));
 				}
 				//Stays in this statement until Ai == n-1
-				k = 0;
+				loopIndex = 0;
 			}
 			//If Ai == n and i is less than the number of loops, move index back one
-			else if(incrementor[k] == this.getIterations() && k < this.getLoops())
+			else if(incrementor[loopIndex] == numberOfIterations && loopIndex < numberOfLoops)
 			{
-				val--;
-				k--;
+				loopIndex--;
 			}
 			//If last Ai == n-1 reset index to zero once and reset first value to 0
-			else if(incrementor[this.getLoops()-1] == this.getIterations()-1 && !alreadyExecuted)
+			else if(incrementor[numberOfLoops-1] == numberOfIterations-1 && !alreadyExecuted)
 			{
 				alreadyExecuted = true;
-				//Catch extra step
-				k = 1;
-				incrementor[k] = 1;
-				k = 0;
-				incrementor[k] = 0;
+				loopIndex = 0;
+				incrementor[loopIndex] = 0;
 			}
 			//Otherwise, reset Ai to 0 and move the index forward
 			else
 			{
-	
-				
-				incrementor[k] = 0;
-				k++;
-								
+				incrementor[loopIndex] = 0;
+				loopIndex++;		
 			}	
 		}
 		System.out.println("\nProcess took : " + (double)((System.nanoTime()-time)/1000000) + " milliseconds" );

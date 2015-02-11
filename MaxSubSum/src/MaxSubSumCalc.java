@@ -165,8 +165,8 @@ public class MaxSubSumCalc
 				}
 			}
 		}
-		System.out.println("Max sum = " + max_sum);
-		System.out.println("Time Taken: " + (System.nanoTime() - start));
+		System.out.println("\tMax sum = " + max_sum);
+		System.out.println("\tTime Taken: " + (System.nanoTime() - start)/100 + " milliseconds\n");
 	}
 	
 	public void Soph()
@@ -188,8 +188,8 @@ public class MaxSubSumCalc
 				}
 			}
 		}
-		System.out.println("Max sum = " + max_sum);
-		System.out.println("Time Taken: " + (System.nanoTime() - start));
+		System.out.println("\tMax sum = " + max_sum);
+		System.out.println("\tTime Taken: " + (System.nanoTime() - start)/100 + " milliseconds\n");
 		
 	}
 	
@@ -228,8 +228,8 @@ public class MaxSubSumCalc
 				this_sum = 0;
 			}
 		}
-		System.out.println("Max sum = " + max_sum);
-		System.out.println("Time Taken: " + (System.nanoTime() - start));
+		System.out.println("\tMax sum = " + max_sum);
+		System.out.println("\tTime Taken: " + (System.nanoTime() - start)/100 + " milliseconds\n");
 		
 	}
 	

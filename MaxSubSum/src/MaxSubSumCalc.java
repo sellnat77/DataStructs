@@ -210,10 +210,9 @@ public class MaxSubSumCalc
 		int rightValue= 0;
 		
 		
-		if(left - right  <= 1)
+		if(a.length == 2)
 		{
-			mssMax = jBaseCase(a,left,right);
-			System.out.println("\tMax Sum = " + mssMax);
+			return jBaseCase(a,left,right);
 			
 		}
 		
@@ -245,6 +244,10 @@ public class MaxSubSumCalc
 		{
 			mssMax = mssRight;
 			
+		}
+		if(mssRight + mssLeft > mssMax)
+		{
+			mssMax =mssRight + mssLeft ; 
 		}
 		
 		

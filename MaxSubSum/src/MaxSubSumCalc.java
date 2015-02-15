@@ -56,10 +56,12 @@ public class MaxSubSumCalc
 			case 1:
 				System.out.println("Please enter the ints for the array to find the mss separated by commas: ");
 				this.inputArray();
+				this.runAlgorithms(this.enterMethodsToRun());
 				break;
 			case 2:
 				System.out.println("Please enter the length for the randomly generated array ");
 				this.enterArrayLength();
+				this.runAlgorithms(this.enterMethodsToRun());
 				break;
 			case 3:
 				this.runAlgorithms(this.enterMethodsToRun());
@@ -134,7 +136,7 @@ public class MaxSubSumCalc
 			if(methodsToRun.charAt(k) == '3')
 			{
 				System.out.println("Running junior");
-				//this.Junior(a, 0, this.getALength()-1);
+				this.Junior(a, 0, this.getALength()-1);
 			}
 			if(methodsToRun.charAt(k) == '4')
 			{
@@ -198,19 +200,80 @@ public class MaxSubSumCalc
 		
 	}
 	
-	public void Junior(int a[], int left, int right)
+	public int Junior(int a[], int left, int right)
 	{
+		int k,m;
+		int mssMax = 0;
+		int mssLeft = 0;
+		int leftValue = 0;
+		int mssRight = 0;
+		int rightValue= 0;
 		
+		
+		if(left - right  <= 1)
+		{
+			mssMax = jBaseCase(a,left,right);
+			System.out.println("\tMax Sum = " + mssMax);
+			
+		}
+		
+		int mid = (int)((1.0*(right-left))/2);
+		 mssLeft = Junior(a, left, mid);
+		 mssRight = Junior(a,(mid+1),right);
+		int mssMiddle = jMSSMiddle(a,left,mid,right);
+		
+		for(k = 0; k < left; k++)
+		{
+			leftValue += a[k];
+			if(leftValue > mssLeft)
+			{
+				mssLeft = leftValue;
+			}
+		}
+		
+		for(m = 0; m < right; m++)
+		{
+			rightValue += a[k];
+			if(rightValue > mssRight)
+			{
+				mssRight = rightValue;
+			}
+		}
+		
+		mssMax = mssLeft;
+		if(mssMax < mssRight)
+		{
+			mssMax = mssRight;
+			
+		}
+		
+		
+		
+		
+		return mssMax; 
 	}
 	
-	public void jBaseCase(int a[], int left, int right)
+	public int jBaseCase(int a[], int left, int right)
 	{
-		
+		int MSS;
+		if(a[left] > a[right] && a[left] > 0)
+		{
+			MSS = a[left];
+		}
+		else if(a[right] > a[left] && a[right] > 0)
+		{
+			MSS = a[right];
+		}
+		else
+		{
+			MSS = 0;
+		}
+		return MSS;
 	}
 	
-	public void jMSSMiddle(int a[], int left, int right)
+	public int jMSSMiddle(int a[], int left, int mid, int right)
 	{
-		
+		return 0;
 	}
 	
 	public void Senior()

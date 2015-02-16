@@ -104,7 +104,7 @@ public class MaxSubSumCalc
 		
 		for(k = 0; k < size; k++)
 		{
-			a[k] = (int)(Math.random()*10)%10+1;
+			a[k] = (int)((Math.random()*20)%20+1)-10;
 			System.out.printf("%3d.) %3d\n",k,a[k]);
 		}
 	}
@@ -136,7 +136,10 @@ public class MaxSubSumCalc
 			if(methodsToRun.charAt(k) == '3')
 			{
 				System.out.println("Running junior");
-				this.Junior(a, 0, this.getALength()-1);
+				long timeTaken = System.nanoTime();
+				System.out.println("\tMax Sum: "+this.Junior(a, 0, (this.getALength()-1)));
+				timeTaken = System.nanoTime() - timeTaken;
+				System.out.println("\tTime Taken: " + timeTaken/100 + " milliseconds");
 			}
 			if(methodsToRun.charAt(k) == '4')
 			{
@@ -186,7 +189,7 @@ public class MaxSubSumCalc
 		for(int i = 0; i < this.getALength(); i++)
 		{
 			this_sum = 0;
-			for(int j = 0; j < this.getALength(); j++)
+			for(int j = i; j < this.getALength(); j++)
 			{
 				this_sum += a[j];
 				if(this_sum > max_sum)
@@ -208,19 +211,22 @@ public class MaxSubSumCalc
 		int leftValue = 0;
 		int mssRight = 0;
 		int rightValue= 0;
+		int mid = 0;
+		int mssMiddle = 0;
 		
 		
-		if(a.length == 2)
+		if(left == right)
 		{
 			return jBaseCase(a,left,right);
 			
 		}
 		
-		int mid = (int)((1.0*(right-left))/2);
-		 mssLeft = Junior(a, left, mid);
-		 mssRight = Junior(a,(mid+1),right);
-		int mssMiddle = jMSSMiddle(a,left,mid,right);
+		mid = (int)((1.0*(Math.abs(right+left)))/2);
+		mssLeft = Junior(a, left, mid);
+		mssRight = Junior(a,(mid+1),right);
+		mssMiddle = jMSSMiddle(a,left,mid,right);
 		
+		//Check left mss
 		for(k = 0; k < left; k++)
 		{
 			leftValue += a[k];
@@ -230,9 +236,10 @@ public class MaxSubSumCalc
 			}
 		}
 		
+		//Check right mss
 		for(m = 0; m < right; m++)
 		{
-			rightValue += a[k];
+			rightValue += a[m];
 			if(rightValue > mssRight)
 			{
 				mssRight = rightValue;
@@ -245,13 +252,11 @@ public class MaxSubSumCalc
 			mssMax = mssRight;
 			
 		}
-		if(mssRight + mssLeft > mssMax)
+		
+		if(mssMax < mssMiddle)
 		{
-			mssMax =mssRight + mssLeft ; 
+			mssMax = mssMiddle ; 
 		}
-		
-		
-		
 		
 		return mssMax; 
 	}
@@ -259,15 +264,23 @@ public class MaxSubSumCalc
 	public int jBaseCase(int a[], int left, int right)
 	{
 		int MSS;
-		if(a[left] > a[right] && a[left] > 0)
+		if(a[left] > a[right])
 		{
 			MSS = a[left];
 		}
-		else if(a[right] > a[left] && a[right] > 0)
+		else if(a[right] > a[left])
 		{
 			MSS = a[right];
 		}
-		else
+		else if(left == right)
+		{
+			MSS = a[left];
+		}
+		else if(a[left] == a[right])
+		{
+			MSS = a[left];
+		}
+		else 
 		{
 			MSS = 0;
 		}
@@ -276,7 +289,30 @@ public class MaxSubSumCalc
 	
 	public int jMSSMiddle(int a[], int left, int mid, int right)
 	{
-		return 0;
+		int k;
+		int sum = 0;
+		
+		int sumLeft = 0;
+		for(k = mid; k >= left; k--)
+		{
+			sum += a[k];
+			if(sum > sumLeft)
+			{
+				sumLeft = sum;
+			}
+		}
+		sum = 0;
+		int sumRight = 0;
+		for(k = mid+1; k <= right; k++)
+		{
+			sum += a[k];
+			if(sum > sumRight)
+			{
+				sumRight = sum;
+			}
+		}
+		
+		return (sumLeft+sumRight);
 	}
 	
 	public void Senior()

@@ -104,8 +104,8 @@ public class MaxSubSumCalc
 		
 		for(k = 0; k < size; k++)
 		{
-			a[k] = (int)((Math.random()*20)%20+1)-10;
-			System.out.printf("%3d.) %3d\n",k,a[k]);
+			a[k] = (int)((Math.random()*200)%200+1)-100;
+			//System.out.printf("%3d.) %3d\n",k,a[k]);
 		}
 	}
 	
@@ -277,13 +277,13 @@ public class MaxSubSumCalc
 		{
 			MSS = a[left];
 		}
+		else if(a[left] < 0 && a[right] <0)
+		{
+			MSS = 0;
+		}
 		else if(a[right] > a[left])
 		{
 			MSS = a[right];
-		}
-		else if(left == right)
-		{
-			MSS = a[left];
 		}
 		else if(a[left] == a[right])
 		{

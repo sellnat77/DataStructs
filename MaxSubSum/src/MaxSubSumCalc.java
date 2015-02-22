@@ -126,12 +126,18 @@ public class MaxSubSumCalc
 			if(methodsToRun.charAt(k) == '1')
 			{
 				System.out.println("Running freshman");
+				long timeTaken = System.nanoTime();
 				this.Freshman();
+				timeTaken = System.nanoTime() - timeTaken;
+				System.out.println("\tTime Taken: " + timeTaken/100 + " milliseconds");
 			}
 			if(methodsToRun.charAt(k) == '2')
 			{
 				System.out.println("Running sophomore");
+				long timeTaken = System.nanoTime();
 				this.Soph();
+				timeTaken = System.nanoTime() - timeTaken;
+				System.out.println("\tTime Taken: " + timeTaken/100 + " milliseconds");
 			}
 			if(methodsToRun.charAt(k) == '3')
 			{
@@ -144,7 +150,10 @@ public class MaxSubSumCalc
 			if(methodsToRun.charAt(k) == '4')
 			{
 				System.out.println("Running senior");
+				long timeTaken = System.nanoTime();
 				this.Senior();
+				timeTaken = System.nanoTime() - timeTaken;
+				System.out.println("\tTime Taken: " + timeTaken/100 + " milliseconds");
 			}
 	
 		}
@@ -157,7 +166,7 @@ public class MaxSubSumCalc
 		int this_sum = 0;
 		long start;
 		
-		start = System.nanoTime();
+		//start = System.nanoTime();
 		for(int i = 0; i < this.getALength(); i++)
 		{
 			for(int j = i; j < this.getALength(); j++)
@@ -176,7 +185,7 @@ public class MaxSubSumCalc
 			}
 		}
 		System.out.println("\tMax sum = " + max_sum);
-		System.out.println("\tTime Taken: " + (System.nanoTime() - start)/100 + " milliseconds\n");
+		//System.out.println("\tTime Taken: " + (System.nanoTime() - start)/100 + " milliseconds\n");
 	}
 	
 	public void Soph()
@@ -185,7 +194,7 @@ public class MaxSubSumCalc
 		int this_sum;
 		long start;
 		
-		start = System.nanoTime();
+		//start = System.nanoTime();
 		for(int i = 0; i < this.getALength(); i++)
 		{
 			this_sum = 0;
@@ -199,7 +208,7 @@ public class MaxSubSumCalc
 			}
 		}
 		System.out.println("\tMax sum = " + max_sum);
-		System.out.println("\tTime Taken: " + (System.nanoTime() - start)/100 + " milliseconds\n");
+		//System.out.println("\tTime Taken: " + (System.nanoTime() - start)/100 + " milliseconds\n");
 		
 	}
 	
@@ -321,7 +330,7 @@ public class MaxSubSumCalc
 		int this_sum = 0;
 		long start;
 		
-		start = System.nanoTime();
+		//start = System.nanoTime();
 		for(int i = 0;i < this.getALength(); i++)
 		{
 			this_sum += a[i];
@@ -336,7 +345,7 @@ public class MaxSubSumCalc
 			}
 		}
 		System.out.println("\tMax sum = " + max_sum);
-		System.out.println("\tTime Taken: " + (System.nanoTime() - start)/100 + " milliseconds\n");
+		//System.out.println("\tTime Taken: " + (System.nanoTime() - start)/100 + " milliseconds\n");
 		
 	}
 	

@@ -162,7 +162,7 @@ public class MaxSubSumCalc
 		}
 		else 
 		{
-			System.out.format("\tTime Taken: %3.2f milliseconds\n",(float)timeTaken/10000);
+			System.out.format("\tTime Taken: %3.2f milliseconds\n",(float)timeTaken/1000000);
 		}
 	}
 	

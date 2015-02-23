@@ -100,7 +100,6 @@ public class MaxSubSumCalc
 		for(k = 0; k < size; k++)
 		{
 			a[k] = (int)((Math.random()*100)%100+1)-50;
-			//System.out.printf("%3d.) %3d\n",k,a[k]);
 		}
 	}
 	
@@ -214,12 +213,9 @@ public class MaxSubSumCalc
 	
 	public int Junior(int a[], int left, int right)
 	{
-		int k,m;
-		int mssMax = 0;
-		int leftValue = 0;
-		int rightValue= 0;
+		int mssMax = 0;	
 		
-		
+		//If there are 2 or less elements in current array
 		if(right-left <= 2 )
 		{
 			return jBaseCase(a,left,right);
@@ -229,13 +225,14 @@ public class MaxSubSumCalc
 		int mid = (int)((1.0*(right+left))/2);
 		int mssLeft = Junior(a, left, mid);
 		int mssRight = Junior(a,(mid+1),right);
+		
+		//Carries out most of the work
 		int mssMiddle = jMSSMiddle(a,left,mid,right);
 		
 		mssMax = mssLeft;
 		if(mssMax < mssRight)
 		{
 			mssMax = mssRight;
-			
 		}
 		
 		if(mssMax < mssMiddle)
@@ -278,6 +275,7 @@ public class MaxSubSumCalc
 		int k;
 		int sum = 0;
 		
+		//Check left sum
 		int sumLeft = 0;
 		for(k = mid; k >= left; k--)
 		{
@@ -287,6 +285,8 @@ public class MaxSubSumCalc
 				sumLeft = sum;
 			}
 		}
+		
+		//Check right sum
 		sum = 0;
 		int sumRight = 0;
 		for(k = mid+1; k <= right; k++)

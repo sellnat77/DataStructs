@@ -231,27 +231,6 @@ public class MaxSubSumCalc
 		int mssRight = Junior(a,(mid+1),right);
 		int mssMiddle = jMSSMiddle(a,left,mid,right);
 		
-		
-		//Check left mss
-		for(k = 0; k < left; k++)
-		{
-			leftValue += a[k];			
-			if(leftValue > mssLeft)
-			{
-				mssLeft = leftValue;
-			}
-		}
-		
-		//Check right mss
-		for(m = 0; m < right; m++)
-		{
-			rightValue += a[m];
-			if(rightValue > mssRight)
-			{
-				mssRight = rightValue;
-			}
-		}
-		
 		mssMax = mssLeft;
 		if(mssMax < mssRight)
 		{

@@ -100,7 +100,7 @@ public class MaxSubSumCalc
 		for(k = 0; k < size; k++)
 		{
 			a[k] = (int)((Math.random()*100)%100+1)-50;
-			System.out.printf("%3d.) %3d\n",k,a[k]);
+			//System.out.printf("%3d.) %3d\n",k,a[k]);
 		}
 	}
 	
@@ -115,53 +115,63 @@ public class MaxSubSumCalc
 	public void runAlgorithms(String methodsToRun)
 	{
 		int k;
+		long timeTaken;
 		for(k = 0; k < methodsToRun.length(); k++)
 		{
-		
 			if(methodsToRun.charAt(k) == '1')
 			{
 				System.out.println("Running freshman");
-				long timeTaken = System.nanoTime();
+				timeTaken = System.nanoTime();
 				System.out.println("\tMax Sum: "+this.Freshman());
 				timeTaken = System.nanoTime() - timeTaken;
-				System.out.println("\tTime Taken: " + timeTaken/100 + " milliseconds");
+				this.checkTime(timeTaken);
 			}
-			if(methodsToRun.charAt(k) == '2')
+			else if(methodsToRun.charAt(k) == '2')
 			{
 				System.out.println("Running sophomore");
-				long timeTaken = System.nanoTime();
+				timeTaken = System.nanoTime();
 				System.out.println("\tMax Sum: "+this.Soph());
 				timeTaken = System.nanoTime() - timeTaken;
-				System.out.println("\tTime Taken: " + timeTaken/100 + " milliseconds");
+				this.checkTime(timeTaken);
 			}
-			if(methodsToRun.charAt(k) == '3')
+			else if(methodsToRun.charAt(k) == '3')
 			{
 				System.out.println("Running junior");
-				long timeTaken = System.nanoTime();
+				timeTaken = System.nanoTime();
 				System.out.println("\tMax Sum: "+this.Junior(a, 0, (this.getALength()-1)));
 				timeTaken = System.nanoTime() - timeTaken;
-				System.out.println("\tTime Taken: " + timeTaken/100 + " milliseconds");
+				this.checkTime(timeTaken);
 			}
-			if(methodsToRun.charAt(k) == '4')
+			else if(methodsToRun.charAt(k) == '4')
 			{
 				System.out.println("Running senior");
-				long timeTaken = System.nanoTime();
+				timeTaken = System.nanoTime();
 				System.out.println("\tMax Sum: "+this.Senior());
 				timeTaken = System.nanoTime() - timeTaken;
-				System.out.println("\tTime Taken: " + timeTaken/100 + " milliseconds");
+				this.checkTime(timeTaken);
 			}
 	
 		}
 		
 	}
 	
+	public void checkTime(long timeTaken)
+	{
+		if(timeTaken/10000 > 1000)
+		{
+			System.out.format("\tTime Taken: %3.2f seconds\n",(float)timeTaken/1000000000);
+		}
+		else 
+		{
+			System.out.format("\tTime Taken: %3.2f milliseconds\n",(float)timeTaken/10000);
+		}
+	}
+	
 	public int Freshman()
 	{
 		int max_sum = 0;
 		int this_sum = 0;
-		long start;
-		
-		//start = System.nanoTime();
+
 		for(int i = 0; i < this.getALength(); i++)
 		{
 			for(int j = i; j < this.getALength(); j++)
@@ -180,16 +190,13 @@ public class MaxSubSumCalc
 			}
 		}
 		return max_sum;
-		//System.out.println("\tTime Taken: " + (System.nanoTime() - start)/100 + " milliseconds\n");
 	}
 	
 	public int Soph()
 	{
 		int max_sum = 0; 
 		int this_sum;
-		long start;
-		
-		//start = System.nanoTime();
+
 		for(int i = 0; i < this.getALength(); i++)
 		{
 			this_sum = 0;
@@ -203,38 +210,32 @@ public class MaxSubSumCalc
 			}
 		}
 		return max_sum;
-		//System.out.println("\tTime Taken: " + (System.nanoTime() - start)/100 + " milliseconds\n");
-		
 	}
 	
 	public int Junior(int a[], int left, int right)
 	{
 		int k,m;
 		int mssMax = 0;
-		int mssLeft = 0;
 		int leftValue = 0;
-		int mssRight = 0;
 		int rightValue= 0;
-		int mid = 0;
-		int mssMiddle = 0;
 		
 		
-		if(right-left <= 4 )//left == right )
+		if(right-left <= 2 )
 		{
 			return jBaseCase(a,left,right);
 			
 		}
 		
-		mid = (right+left)/2;
-		mssLeft = Junior(a, left, mid);
-		mssRight = Junior(a,(mid+1),right);
-		mssMiddle = jMSSMiddle(a,left,mid,right);
+		int mid = (int)((1.0*(right+left))/2);
+		int mssLeft = Junior(a, left, mid);
+		int mssRight = Junior(a,(mid+1),right);
+		int mssMiddle = jMSSMiddle(a,left,mid,right);
 		
 		
 		//Check left mss
 		for(k = 0; k < left; k++)
 		{
-			leftValue += a[k];
+			leftValue += a[k];			
 			if(leftValue > mssLeft)
 			{
 				mssLeft = leftValue;
@@ -325,9 +326,7 @@ public class MaxSubSumCalc
 	{
 		int max_sum = 0;
 		int this_sum = 0;
-		long start;
-		
-		//start = System.nanoTime();
+
 		for(int i = 0;i < this.getALength(); i++)
 		{
 			this_sum += a[i];
@@ -341,9 +340,7 @@ public class MaxSubSumCalc
 				this_sum = 0;
 			}
 		}
-		return max_sum;
-		//System.out.println("\tTime Taken: " + (System.nanoTime() - start)/100 + " milliseconds\n");
-		
+		return max_sum;		
 	}
 	
 	

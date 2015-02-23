@@ -99,8 +99,8 @@ public class MaxSubSumCalc
 		
 		for(k = 0; k < size; k++)
 		{
-			a[k] = (int)((Math.random()*200)%200+1)-100;
-			//System.out.printf("%3d.) %3d\n",k,a[k]);
+			a[k] = (int)((Math.random()*100)%100+1)-50;
+			System.out.printf("%3d.) %3d\n",k,a[k]);
 		}
 	}
 	
@@ -122,7 +122,7 @@ public class MaxSubSumCalc
 			{
 				System.out.println("Running freshman");
 				long timeTaken = System.nanoTime();
-				this.Freshman();
+				System.out.println("\tMax Sum: "+this.Freshman());
 				timeTaken = System.nanoTime() - timeTaken;
 				System.out.println("\tTime Taken: " + timeTaken/100 + " milliseconds");
 			}
@@ -130,7 +130,7 @@ public class MaxSubSumCalc
 			{
 				System.out.println("Running sophomore");
 				long timeTaken = System.nanoTime();
-				this.Soph();
+				System.out.println("\tMax Sum: "+this.Soph());
 				timeTaken = System.nanoTime() - timeTaken;
 				System.out.println("\tTime Taken: " + timeTaken/100 + " milliseconds");
 			}
@@ -146,7 +146,7 @@ public class MaxSubSumCalc
 			{
 				System.out.println("Running senior");
 				long timeTaken = System.nanoTime();
-				this.Senior();
+				System.out.println("\tMax Sum: "+this.Senior());
 				timeTaken = System.nanoTime() - timeTaken;
 				System.out.println("\tTime Taken: " + timeTaken/100 + " milliseconds");
 			}
@@ -155,7 +155,7 @@ public class MaxSubSumCalc
 		
 	}
 	
-	public void Freshman()
+	public int Freshman()
 	{
 		int max_sum = 0;
 		int this_sum = 0;
@@ -179,11 +179,11 @@ public class MaxSubSumCalc
 				}
 			}
 		}
-		System.out.println("\tMax sum = " + max_sum);
+		return max_sum;
 		//System.out.println("\tTime Taken: " + (System.nanoTime() - start)/100 + " milliseconds\n");
 	}
 	
-	public void Soph()
+	public int Soph()
 	{
 		int max_sum = 0; 
 		int this_sum;
@@ -202,7 +202,7 @@ public class MaxSubSumCalc
 				}
 			}
 		}
-		System.out.println("\tMax sum = " + max_sum);
+		return max_sum;
 		//System.out.println("\tTime Taken: " + (System.nanoTime() - start)/100 + " milliseconds\n");
 		
 	}
@@ -219,16 +219,17 @@ public class MaxSubSumCalc
 		int mssMiddle = 0;
 		
 		
-		if(left == right)
+		if(right-left <= 4 )//left == right )
 		{
 			return jBaseCase(a,left,right);
 			
 		}
 		
-		mid = (int)((1.0*(Math.abs(right+left)))/2);
+		mid = (right+left)/2;
 		mssLeft = Junior(a, left, mid);
 		mssRight = Junior(a,(mid+1),right);
 		mssMiddle = jMSSMiddle(a,left,mid,right);
+		
 		
 		//Check left mss
 		for(k = 0; k < left; k++)
@@ -268,13 +269,14 @@ public class MaxSubSumCalc
 	public int jBaseCase(int a[], int left, int right)
 	{
 		int MSS;
-		if(a[left] > a[right])
-		{
-			MSS = a[left];
-		}
-		else if(a[left] < 0 && a[right] <0)
+		
+		if(a[left] < 0 && a[right] <0)
 		{
 			MSS = 0;
+		}
+		else if(a[left] > a[right])
+		{
+			MSS = a[left];
 		}
 		else if(a[right] > a[left])
 		{
@@ -319,7 +321,7 @@ public class MaxSubSumCalc
 		return (sumLeft+sumRight);
 	}
 	
-	public void Senior()
+	public int Senior()
 	{
 		int max_sum = 0;
 		int this_sum = 0;
@@ -339,7 +341,7 @@ public class MaxSubSumCalc
 				this_sum = 0;
 			}
 		}
-		System.out.println("\tMax sum = " + max_sum);
+		return max_sum;
 		//System.out.println("\tTime Taken: " + (System.nanoTime() - start)/100 + " milliseconds\n");
 		
 	}

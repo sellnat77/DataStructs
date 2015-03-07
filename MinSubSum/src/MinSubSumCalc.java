@@ -182,7 +182,7 @@ public class MinSubSumCalc
 					this_sum += a[k];
 				}
 				
-				if(this_sum > max_sum)
+				if(this_sum < max_sum && this_sum > 0)
 				{
 					max_sum = this_sum;
 				}
@@ -202,7 +202,7 @@ public class MinSubSumCalc
 			for(int j = i; j < this.getALength(); j++)
 			{
 				this_sum += a[j];
-				if(this_sum > max_sum)
+				if(this_sum < max_sum && this_sum > 0)
 				{
 					max_sum = this_sum;
 				}
@@ -230,12 +230,12 @@ public class MinSubSumCalc
 		int mssMiddle = jMSSMiddle(a,left,mid,right);
 		
 		mssMax = mssLeft;
-		if(mssMax < mssRight)
+		if(mssMax > mssRight && mssRight > 0)
 		{
 			mssMax = mssRight;
 		}
 		
-		if(mssMax < mssMiddle)
+		if(mssMax > mssMiddle && mssMiddle > 0 )
 		{
 			mssMax = mssMiddle ; 
 		}
@@ -251,11 +251,11 @@ public class MinSubSumCalc
 		{
 			MSS = 0;
 		}
-		else if(a[left] > a[right])
+		else if(a[left] < a[right])
 		{
 			MSS = a[left];
 		}
-		else if(a[right] > a[left])
+		else if(a[right] < a[left])
 		{
 			MSS = a[right];
 		}
@@ -280,7 +280,7 @@ public class MinSubSumCalc
 		for(k = mid; k >= left; k--)
 		{
 			sum += a[k];
-			if(sum > sumLeft)
+			if(sum < sumLeft && sum > 0)
 			{
 				sumLeft = sum;
 			}
@@ -292,7 +292,7 @@ public class MinSubSumCalc
 		for(k = mid+1; k <= right; k++)
 		{
 			sum += a[k];
-			if(sum > sumRight)
+			if(sum < sumRight && sum > 0)
 			{
 				sumRight = sum;
 			}
@@ -310,7 +310,7 @@ public class MinSubSumCalc
 		{
 			this_sum += a[i];
 			
-			if(this_sum > max_sum)
+			if(this_sum < max_sum && this_sum > 0)
 			{
 				max_sum = this_sum;
 			}

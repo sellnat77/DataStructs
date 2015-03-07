@@ -99,7 +99,8 @@ public class MinSubSumCalc
 		
 		for(k = 0; k < size; k++)
 		{
-			a[k] = (int)((Math.random()*100)%100+1)-50;
+			a[k] = (int)((Math.random()*500)%500+1);//-250;
+			System.out.println(a[k]+"\n");
 		}
 	}
 	
@@ -121,7 +122,7 @@ public class MinSubSumCalc
 			{
 				System.out.println("Running freshman");
 				timeTaken = System.nanoTime();
-				System.out.println("\tMax Sum: "+this.Freshman());
+				System.out.println("\tMin Sum: "+this.Freshman());
 				timeTaken = System.nanoTime() - timeTaken;
 				this.checkTime(timeTaken);
 			}
@@ -129,7 +130,7 @@ public class MinSubSumCalc
 			{
 				System.out.println("Running sophomore");
 				timeTaken = System.nanoTime();
-				System.out.println("\tMax Sum: "+this.Soph());
+				System.out.println("\tMin Sum: "+this.Soph());
 				timeTaken = System.nanoTime() - timeTaken;
 				this.checkTime(timeTaken);
 			}
@@ -137,7 +138,7 @@ public class MinSubSumCalc
 			{
 				System.out.println("Running junior");
 				timeTaken = System.nanoTime();
-				System.out.println("\tMax Sum: "+this.Junior(a, 0, (this.getALength()-1)));
+				System.out.println("\tMin Sum: "+this.Junior(a, 0, (this.getALength()-1)));
 				timeTaken = System.nanoTime() - timeTaken;
 				this.checkTime(timeTaken);
 			}
@@ -145,7 +146,7 @@ public class MinSubSumCalc
 			{
 				System.out.println("Running senior");
 				timeTaken = System.nanoTime();
-				System.out.println("\tMax Sum: "+this.Senior());
+				System.out.println("\tMin Sum: "+this.Senior());
 				timeTaken = System.nanoTime() - timeTaken;
 				this.checkTime(timeTaken);
 			}
@@ -182,7 +183,7 @@ public class MinSubSumCalc
 					this_sum += a[k];
 				}
 				
-				if(this_sum < max_sum && this_sum > 0)
+				if(this_sum < max_sum )
 				{
 					max_sum = this_sum;
 				}
@@ -310,14 +311,11 @@ public class MinSubSumCalc
 		{
 			this_sum += a[i];
 			
-			if(this_sum < max_sum && this_sum > 0)
+			if(this_sum < max_sum )
 			{
 				max_sum = this_sum;
 			}
-			else if(this_sum < 0)
-			{
-				this_sum = 0;
-			}
+
 		}
 		return max_sum;		
 	}

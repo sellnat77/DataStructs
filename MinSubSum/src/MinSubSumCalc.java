@@ -31,7 +31,7 @@ public class MinSubSumCalc
 		System.out.println("\n1. Enter comma delimited list of ints");
 		System.out.println("2. Enter length of array for random numbers");
 		System.out.println("3. Enter the string of programs to run\n"
-				+ "\t1:Freshmen\n\t2:Sophomore\n\t3:Junior\n\t4:Senior");
+				+ "\t1:Sophomore\n\t2:Junior\n");
 		System.out.println("4. Exit program.");
 	}
 	
@@ -99,7 +99,7 @@ public class MinSubSumCalc
 		
 		for(k = 0; k < size; k++)
 		{
-			a[k] = (int)((Math.random()*500)%500+1);//-250;
+			a[k] = (int)((Math.random()*500)%500+1)-250;
 			System.out.println(a[k]+"\n");
 		}
 	}
@@ -120,37 +120,20 @@ public class MinSubSumCalc
 		{
 			if(methodsToRun.charAt(k) == '1')
 			{
-				System.out.println("Running freshman");
-				timeTaken = System.nanoTime();
-				System.out.println("\tMin Sum: "+this.Freshman());
-				timeTaken = System.nanoTime() - timeTaken;
-				this.checkTime(timeTaken);
-			}
-			else if(methodsToRun.charAt(k) == '2')
-			{
 				System.out.println("Running sophomore");
 				timeTaken = System.nanoTime();
 				System.out.println("\tMin Sum: "+this.Soph());
 				timeTaken = System.nanoTime() - timeTaken;
 				this.checkTime(timeTaken);
 			}
-			else if(methodsToRun.charAt(k) == '3')
+			else if(methodsToRun.charAt(k) == '2')
 			{
 				System.out.println("Running junior");
 				timeTaken = System.nanoTime();
 				System.out.println("\tMin Sum: "+this.Junior(a, 0, (this.getALength()-1)));
 				timeTaken = System.nanoTime() - timeTaken;
 				this.checkTime(timeTaken);
-			}
-			else if(methodsToRun.charAt(k) == '4')
-			{
-				System.out.println("Running senior");
-				timeTaken = System.nanoTime();
-				System.out.println("\tMin Sum: "+this.Senior());
-				timeTaken = System.nanoTime() - timeTaken;
-				this.checkTime(timeTaken);
-			}
-	
+			}	
 		}
 		
 	}
@@ -167,34 +150,10 @@ public class MinSubSumCalc
 		}
 	}
 	
-	public int Freshman()
-	{
-		int max_sum = 0;
-		int this_sum = 0;
-
-		for(int i = 0; i < this.getALength(); i++)
-		{
-			for(int j = i; j < this.getALength(); j++)
-			{
-				this_sum = 0;
-				
-				for(int k = i; k <= j; k++)
-				{
-					this_sum += a[k];
-				}
-				
-				if(this_sum < max_sum )
-				{
-					max_sum = this_sum;
-				}
-			}
-		}
-		return max_sum;
-	}
 	
 	public int Soph()
 	{
-		int max_sum = 0; 
+		int min_sum = 500; 
 		int this_sum;
 
 		for(int i = 0; i < this.getALength(); i++)
@@ -203,13 +162,15 @@ public class MinSubSumCalc
 			for(int j = i; j < this.getALength(); j++)
 			{
 				this_sum += a[j];
-				if(this_sum < max_sum && this_sum > 0)
+				if(this_sum < min_sum && this_sum > 0)
 				{
-					max_sum = this_sum;
+					min_sum = this_sum;
 				}
+				
 			}
+
 		}
-		return max_sum;
+		return min_sum;
 	}
 	
 	public int Junior(int a[], int left, int right)
@@ -300,24 +261,6 @@ public class MinSubSumCalc
 		}
 		
 		return (sumLeft+sumRight);
-	}
-	
-	public int Senior()
-	{
-		int max_sum = 0;
-		int this_sum = 0;
-
-		for(int i = 0;i < this.getALength(); i++)
-		{
-			this_sum += a[i];
-			
-			if(this_sum < max_sum )
-			{
-				max_sum = this_sum;
-			}
-
-		}
-		return max_sum;		
 	}
 	
 	

@@ -175,7 +175,7 @@ public class MinSubSumCalc
 	
 	public int Junior(int a[], int left, int right)
 	{
-		int mssMax = 0;	
+		int mssMin = 500;	
 		
 		//If there are 2 or less elements in current array
 		if(right-left <= 2 )
@@ -191,25 +191,25 @@ public class MinSubSumCalc
 		//Carries out most of the work
 		int mssMiddle = jMSSMiddle(a,left,mid,right);
 		
-		mssMax = mssLeft;
-		if(mssMax > mssRight && mssRight > 0)
+		mssMin = mssLeft;
+		if(mssMin > mssRight && mssRight > 0)
 		{
-			mssMax = mssRight;
+			mssMin = mssRight;
 		}
 		
-		if(mssMax > mssMiddle && mssMiddle > 0 )
+		if(mssMin > mssMiddle && mssMiddle > 0 )
 		{
-			mssMax = mssMiddle ; 
+			mssMin = mssMiddle ; 
 		}
 		
-		return mssMax; 
+		return mssMin; 
 	}
 	
 	public int jBaseCase(int a[], int left, int right)
 	{
 		int MSS;
 		
-		if(a[left] < 0 && a[right] <0)
+		if(a[left] < 0 && a[right] < 0)
 		{
 			MSS = 0;
 		}
@@ -235,32 +235,65 @@ public class MinSubSumCalc
 	public int jMSSMiddle(int a[], int left, int mid, int right)
 	{
 		int k;
+		int leftSums[] = new int[mid+1];
+		int rightSums[] = new int[right];
+		int overallMin = 500;
 		int sum = 0;
+		int count = 0;
 		
 		//Check left sum
-		int sumLeft = 0;
+		int sumLeft = 500;
 		for(k = mid; k >= left; k--)
 		{
 			sum += a[k];
+			leftSums[count] = sum;
+			System.out.println("LEFT--) " + leftSums[count]);
+			count++;
+			/*
 			if(sum < sumLeft && sum > 0)
 			{
 				sumLeft = sum;
 			}
+			*/
+			
 		}
 		
+		System.out.println("\n");
 		//Check right sum
 		sum = 0;
-		int sumRight = 0;
+		int sumRight = 500;
+		count = 0;
 		for(k = mid+1; k <= right; k++)
 		{
 			sum += a[k];
+			
+			rightSums[count] = sum;
+			System.out.println("RIGHT--) " + rightSums[count]);
+			count++;
+			/*
 			if(sum < sumRight && sum > 0)
 			{
 				sumRight = sum;
 			}
+			 */
 		}
+		Arrays.sort(leftSums);
+		Arrays.sort(rightSums);
+		sum = 0;
+		int total = left+right;
+		for(k = 0; k < total/2; k++)
+		{
+			sum += leftSums[k]+rightSums[total-(k)];
+			System.out.println("Total: " + sum);
+			if(sum < overallMin && sum > 0)
+			{
+				overallMin = sum;
+			}
+			
+			
+		}
+		return overallMin;
 		
-		return (sumLeft+sumRight);
 	}
 	
 	

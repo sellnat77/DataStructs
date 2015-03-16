@@ -241,7 +241,6 @@ public class MinSubSumCalc
 		int k;
 		int leftSums[] = new int[mid+1];
 		int rightSums[] = new int[right-mid];
-		int tempArray[] = new int[right];
 		int overallMin = 500;
 		int sum = 0;
 		int count = 0;

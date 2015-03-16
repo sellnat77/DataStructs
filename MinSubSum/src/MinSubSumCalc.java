@@ -235,33 +235,29 @@ public class MinSubSumCalc
 	public int jMSSMiddle(int a[], int left, int mid, int right)
 	{
 		int k;
-		int leftSums[] = new int[mid+1];
-		int rightSums[] = new int[right];
+		int leftSums[] = new int[mid];
+		int rightSums[] = new int[right-mid];
+		int tempArray[] = new int[right];
 		int overallMin = 500;
 		int sum = 0;
 		int count = 0;
+		System.out.println("Size of left = " + mid);
+		System.out.println("Size of right = " + (right-mid));
 		
 		//Check left sum
-		int sumLeft = 500;
-		for(k = mid; k >= left; k--)
+		for(k = mid-1; k >= left; k--)
 		{
 			sum += a[k];
 			leftSums[count] = sum;
 			System.out.println("LEFT--) " + leftSums[count]);
 			count++;
-			/*
-			if(sum < sumLeft && sum > 0)
-			{
-				sumLeft = sum;
-			}
-			*/
+
 			
 		}
 		
 		System.out.println("\n");
 		//Check right sum
 		sum = 0;
-		int sumRight = 500;
 		count = 0;
 		for(k = mid+1; k <= right; k++)
 		{
@@ -270,30 +266,42 @@ public class MinSubSumCalc
 			rightSums[count] = sum;
 			System.out.println("RIGHT--) " + rightSums[count]);
 			count++;
-			/*
-			if(sum < sumRight && sum > 0)
-			{
-				sumRight = sum;
-			}
-			 */
+
 		}
+		System.out.println("\nblarhgh");
 		Arrays.sort(leftSums);
 		Arrays.sort(rightSums);
+		System.out.println("Left array: " + Arrays.toString(leftSums)+ " Right array: "+Arrays.toString(rightSums));
+		
 		sum = 0;
-		int total = left+right;
-		for(k = 0; k < total/2; k++)
+		
+		int i = 0;
+		int j = right-mid-1;
+		int check = 0;
+		k = 0;
+		
+		while( i < mid)
 		{
-			sum += leftSums[k]+rightSums[total-(k)];
-			System.out.println("Total: " + sum);
-			if(sum < overallMin && sum > 0)
+			while(j > 0)
 			{
-				overallMin = sum;
+				check = leftSums[i] + rightSums[j];
+				System.out.println("SUM = " +check);
+				if(check <= 0)
+				{
+					i++;
+				}
+				else
+				{
+					j--;
+				}
+				
+			}			
+			if(check < overallMin && check > 0)  
+			{
+				overallMin = check;
 			}
-			
-			
 		}
 		return overallMin;
-		
 	}
 	
 	

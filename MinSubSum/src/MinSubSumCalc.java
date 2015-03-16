@@ -191,6 +191,10 @@ public class MinSubSumCalc
 		//Carries out most of the work
 		int mssMiddle = jMSSMiddle(a,left,mid,right);
 		
+		
+		System.out.println("Min Left = " + mssLeft);
+		System.out.println("Min Right = " + mssRight);
+		System.out.println("Min Middle = " + mssMiddle);
 		mssMin = mssLeft;
 		if(mssMin > mssRight && mssRight > 0)
 		{
@@ -235,7 +239,7 @@ public class MinSubSumCalc
 	public int jMSSMiddle(int a[], int left, int mid, int right)
 	{
 		int k;
-		int leftSums[] = new int[mid];
+		int leftSums[] = new int[mid+1];
 		int rightSums[] = new int[right-mid];
 		int tempArray[] = new int[right];
 		int overallMin = 500;
@@ -245,14 +249,12 @@ public class MinSubSumCalc
 		System.out.println("Size of right = " + (right-mid));
 		
 		//Check left sum
-		for(k = mid-1; k >= left; k--)
+		for(k = mid; k >= 0; k--)
 		{
 			sum += a[k];
 			leftSums[count] = sum;
 			System.out.println("LEFT--) " + leftSums[count]);
 			count++;
-
-			
 		}
 		
 		System.out.println("\n");
@@ -282,24 +284,31 @@ public class MinSubSumCalc
 		
 		while( i < mid)
 		{
-			while(j > 0)
+			while(j >= 0)
 			{
 				check = leftSums[i] + rightSums[j];
 				System.out.println("SUM = " +check);
-				if(check <= 0)
+				
+				if(check <= 0 && i < mid)
 				{
 					i++;
 				}
 				else
 				{
+				
 					j--;
 				}
 				
-			}			
-			if(check < overallMin && check > 0)  
-			{
-				overallMin = check;
+				if(check < overallMin && check > 0)  
+				{
+					overallMin = check;
+					System.out.println("Storing " + overallMin);
+				}
+				
 			}
+			
+
+
 		}
 		return overallMin;
 	}

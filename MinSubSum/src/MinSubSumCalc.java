@@ -26,9 +26,23 @@ public class MinSubSumCalc
 		a = new int[size];
 	}
 	
+	public void debugArray()
+	{
+		this.setALength(8);
+		this.a[0] = -34;
+		this.a[1] = 49;
+		this.a[2] = -58;
+		this.a[3] = 76;
+		this.a[4] = 29;
+		this.a[5] = -71;
+		this.a[6] = -54;
+		this.a[7] = 63;
+	}
+	
 	public void showMenu()
 	{
-		System.out.println("\n1. Enter comma delimited list of ints");
+		System.out.println("\n0. Use debug array");
+		System.out.println("1. Enter comma delimited list of ints");
 		System.out.println("2. Enter length of array for random numbers");
 		System.out.println("3. Enter the string of programs to run\n"
 				+ "\t1:Sophomore\n\t2:Junior\n");
@@ -48,6 +62,10 @@ public class MinSubSumCalc
 
 			switch(selection)
 			{
+			case 0:
+				System.out.println("Using debug array");
+				this.debugArray();
+				this.runAlgorithms(this.enterMethodsToRun());
 			case 1:
 				System.out.println("Please enter the ints for the array to find the mss separated by commas: ");
 				this.inputArray();
@@ -181,7 +199,6 @@ public class MinSubSumCalc
 		if(right-left <= 2 )
 		{
 			return jBaseCase(a,left,right);
-			
 		}
 		
 		int mid = (int)((1.0*(right+left))/2);
@@ -195,8 +212,12 @@ public class MinSubSumCalc
 		System.out.println("Min Left = " + mssLeft);
 		System.out.println("Min Right = " + mssRight);
 		System.out.println("Min Middle = " + mssMiddle);
-		mssMin = mssLeft;
-		if(mssMin > mssRight && mssRight > 0)
+		if(mssMin > mssLeft && mssLeft > 0 )
+		{
+			mssMin = mssRight;
+		}
+		
+		if(mssMin > mssRight && mssRight > 0 )
 		{
 			mssMin = mssRight;
 		}
@@ -215,7 +236,7 @@ public class MinSubSumCalc
 		
 		if(a[left] < 0 && a[right] < 0)
 		{
-			MSS = 0;
+			MSS = 1;
 		}
 		else if(a[left] < a[right])
 		{
@@ -231,7 +252,7 @@ public class MinSubSumCalc
 		}
 		else 
 		{
-			MSS = 0;
+			MSS = 1;
 		}
 		return MSS;
 	}
@@ -244,7 +265,7 @@ public class MinSubSumCalc
 		int overallMin = 500;
 		int sum = 0;
 		int count = 0;
-		System.out.println("Size of left = " + mid);
+		System.out.println("Size of left = " + mid+1);
 		System.out.println("Size of right = " + (right-mid));
 		
 		//Check left sum

@@ -232,8 +232,8 @@ public class MinSubSumCalc
 	
 	public int jBaseCase(int a[], int left, int right)
 	{
-		int MSS;
-		
+		int MSS = 0;
+		/*
 		if(a[left] < 0 && a[right] < 0)
 		{
 			MSS = 1;
@@ -253,6 +253,22 @@ public class MinSubSumCalc
 		else 
 		{
 			MSS = 1;
+		}
+		*/
+		if(a[left]+a[right] > 0)
+		{
+			MSS=a[left]+a[right];
+		}
+		else
+		{
+			if(a[left] > a[right])
+			{
+				MSS = a[left];
+			}
+			else
+			{
+				MSS = a[right];
+			}
 		}
 		return MSS;
 	}

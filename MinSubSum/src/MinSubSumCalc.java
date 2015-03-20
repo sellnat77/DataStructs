@@ -203,14 +203,14 @@ public class MinSubSumCalc
 			return jBaseCase(a,left,right);
 		}
 
-		int mid = (right+left)/2;
+		int mid = (int) Math.ceil((right+left)/2);
 		int mssLeft = Junior(a, left, mid);
 		int mssRight = Junior(a,(mid+1),right);
 		
 		//Carries out most of the work
 		int mssMiddle = jMSSMiddle(a,left,mid,right);
 		//mssMin = mssLeft;
-		if(mssLeft >= 0 )
+		if(mssLeft > 0 )
 		{
 			mssMin = mssLeft;
 			
@@ -304,10 +304,10 @@ public class MinSubSumCalc
 		int j = rightSums.length-1;
 		int check = 0;
 		
-		while(j >= 0 && i < leftSums.length-1)
+		while(j >= 0 && i <= leftSums.length-1)
 		{
 			check = leftSums[i] + rightSums[j];
-			if(check < overallMin && check >= 0)  
+			if(check < overallMin && check > 0)  
 			{
 				overallMin = check;
 			}

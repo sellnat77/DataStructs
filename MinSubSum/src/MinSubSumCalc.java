@@ -117,8 +117,8 @@ public class MinSubSumCalc
 		
 		for(k = 0; k < size; k++)
 		{
-			a[k] = (int)((Math.random()*10)%10+1)-5;
-			//a[k] = (int)((Math.random()*500)%500+1)-250;
+			//a[k] = (int)((Math.random()*10)%10+1)-5;
+			a[k] = (int)((Math.random()*500)%500+1)-250;
 			//System.out.println(a[k]+"\n");
 		}
 	}
@@ -261,7 +261,7 @@ public class MinSubSumCalc
 			MSS = a[right];
 		}
 		
-		if(a[left]+a[right] >= 0 && a[left]+a[right] < MSS)
+		if(a[left]+a[right] > 0 && a[left]+a[right] < MSS)
 		{
 			MSS=a[left]+a[right];
 		}

@@ -194,7 +194,7 @@ public class MinSubSumCalc
 	
 	public int Junior(int a[], int left, int right)
 	{
-		System.out.println(Arrays.toString(a));
+		//System.out.println(Arrays.toString(a));
 		int mssMin = 0;	
 		
 		//If there are 2 or less elements in current array
@@ -261,10 +261,10 @@ public class MinSubSumCalc
 			MSS = a[right];
 		}
 		
-		if(a[left]+a[right] > 0 && a[left]+a[right] < MSS)
-		{
-			MSS=a[left]+a[right];
-		}
+		//if(a[left]+a[right] > 0 && a[left]+a[right] < MSS)
+		//{
+		//	MSS=a[left]+a[right];
+		//}
 
 		return MSS;
 	}

@@ -47,6 +47,7 @@ public class MinSubSumCalc
 		System.out.println("3. Enter the string of programs to run\n"
 				+ "\t1:Sophomore\n\t2:Junior\n");
 		System.out.println("4. Exit program.");
+		System.out.println("5. Show array.");
 	}
 	
 	public void getInput()
@@ -66,6 +67,7 @@ public class MinSubSumCalc
 				System.out.println("Using debug array");
 				this.debugArray();
 				this.runAlgorithms(this.enterMethodsToRun());
+				break;
 			case 1:
 				System.out.println("Please enter the ints for the array to find the mss separated by commas: ");
 				this.inputArray();
@@ -82,6 +84,9 @@ public class MinSubSumCalc
 			case 4:
 				again = false;
 				this.quit();
+				break;
+			case 5:
+				System.out.println(Arrays.toString(a));
 				break;
 			default:
 				System.out.println("");
@@ -195,11 +200,12 @@ public class MinSubSumCalc
 	public int Junior(int a[], int left, int right)
 	{
 		//System.out.println(Arrays.toString(a));
-		int mssMin = 0;	
+		int mssMin = 500;	
 		
 		//If there are 2 or less elements in current array
 		if(right-left < 2 )
 		{
+			//System.out.println("Comparing: " + a[left] + " " + a[right]);
 			return jBaseCase(a,left,right);
 		}
 
@@ -209,6 +215,10 @@ public class MinSubSumCalc
 		
 		//Carries out most of the work
 		int mssMiddle = jMSSMiddle(a,left,mid,right);
+		
+		System.out.println("Left: " + mssLeft);
+		System.out.println("Middle: " + mssMiddle);
+		System.out.println("Right: " + mssRight);
 		//mssMin = mssLeft;
 		if(mssLeft > 0 )
 		{
@@ -237,7 +247,7 @@ public class MinSubSumCalc
 	{
 		int MSS = 500;
 		
-		if( a[left] > 0 && a[right] > 0 )
+		if( a[left] >= 0 && a[right] >= 0 )
 		{
 			if(a[left] < a[right])
 			{
@@ -261,10 +271,10 @@ public class MinSubSumCalc
 			MSS = a[right];
 		}
 		
-		//if(a[left]+a[right] > 0 && a[left]+a[right] < MSS)
-		//{
-		//	MSS=a[left]+a[right];
-		//}
+		if(a[left]+a[right] > 0 && a[left]+a[right] < MSS)
+		{
+			MSS=a[left]+a[right];
+		}
 
 		return MSS;
 	}
@@ -297,12 +307,14 @@ public class MinSubSumCalc
 			count++;
 
 		}
+		
 		Arrays.sort(leftSums);
+		
 		Arrays.sort(rightSums);
 		
 		int i = left;
 		int j = rightSums.length-1;
-		int check = 0;
+		int check = 500;
 		
 		while(j >= 0 && i <= leftSums.length-1)
 		{

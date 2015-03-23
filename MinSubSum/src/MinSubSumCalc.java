@@ -208,7 +208,12 @@ public class MinSubSumCalc
 			//System.out.println("Comparing: " + a[left] + " " + a[right]);
 			return jBaseCase(a,left,right);
 		}
-
+		/*
+		if(a.length == 1)
+		{
+			return a[0];
+		}
+		*/
 		int mid = (int) Math.ceil((right+left)/2);
 		int mssLeft = Junior(a, left, mid);
 		int mssRight = Junior(a,(mid+1),right);
@@ -216,11 +221,11 @@ public class MinSubSumCalc
 		//Carries out most of the work
 		int mssMiddle = jMSSMiddle(a,left,mid,right);
 		
-		System.out.println("Left: " + mssLeft);
-		System.out.println("Middle: " + mssMiddle);
-		System.out.println("Right: " + mssRight);
+		//System.out.println("Left: " + mssLeft);
+		//System.out.println("Middle: " + mssMiddle);
+		//System.out.println("Right: " + mssRight);
 		//mssMin = mssLeft;
-		if(mssLeft > 0 )
+		if(mssLeft >= 0 )
 		{
 			mssMin = mssLeft;
 			
@@ -246,6 +251,11 @@ public class MinSubSumCalc
 	public int jBaseCase(int a[], int left, int right)
 	{
 		int MSS = 500;
+		
+		if(left-right == 1)
+		{
+			MSS = a[left];
+		}
 		
 		if( a[left] >= 0 && a[right] >= 0 )
 		{
@@ -275,6 +285,7 @@ public class MinSubSumCalc
 		{
 			MSS=a[left]+a[right];
 		}
+	
 
 		return MSS;
 	}
@@ -301,11 +312,9 @@ public class MinSubSumCalc
 		count = 0;
 		for(k = mid+1; k <= right; k++)
 		{
-			sum += a[k];
-			
+			sum += a[k];			
 			rightSums[count] = sum;
 			count++;
-
 		}
 		
 		Arrays.sort(leftSums);
@@ -319,7 +328,7 @@ public class MinSubSumCalc
 		while(j >= 0 && i <= leftSums.length-1)
 		{
 			check = leftSums[i] + rightSums[j];
-			if(check < overallMin && check > 0)  
+			if(check <= overallMin && check > 0)  
 			{
 				overallMin = check;
 			}

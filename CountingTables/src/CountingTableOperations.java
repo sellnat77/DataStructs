@@ -13,7 +13,9 @@ public class CountingTableOperations
 {
 	private Scanner userIn = new Scanner(System.in);
 	private int a[];
+	private int counts[] = new int[getSize()];
 	private int size;
+	private int limit = (int) Math.floor(getSize()/2);
 	
 	private Hashtable hTable = new Hashtable(size);
 	
@@ -23,7 +25,14 @@ public class CountingTableOperations
 	}
 	public void setSize(int a)
 	{
+		while(!this.isPrime(a))
+		{
+			a++;
+		}
+		
 		this.size = a;
+		
+		System.out.println(a);
 	}
 	
 	public void showMenu()
@@ -106,6 +115,24 @@ public class CountingTableOperations
 	public void quit()
 	{
 		System.out.println("Good Bye!");
+	}
+	//checks whether an int is prime or not.
+	boolean isPrime(int n) {
+	    //check if n is a multiple of 2
+	    if (n%2==0) return false;
+	    //if not, then just check the odds
+	    for(int i=3;i*i<=n;i+=2) {
+	        if(n%i==0)
+	            return false;
+	    }
+	    return true;
+	}
+	
+	int hash(int val)
+	{
+		val = val % getSize();
+		
+		return val;
 	}
 
 }

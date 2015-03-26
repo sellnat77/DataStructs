@@ -213,9 +213,9 @@ public class MinSubSumCalc
 		//Carries out most of the work
 		int mssMiddle = jMSSMiddle(a,left,mid,right);
 		
-		//System.out.println("Left: " + mssLeft);
-		//System.out.println("Middle: " + mssMiddle);
-		//System.out.println("Right: " + mssRight);
+		System.out.println("Left: " + mssLeft);
+		System.out.println("Middle: " + mssMiddle);
+		System.out.println("Right: " + mssRight);
 		
 		
 		if(mssMin > mssLeft && mssLeft > 0 )
@@ -243,13 +243,13 @@ public class MinSubSumCalc
 	{
 		int k;
 		int leftSums[] = new int[mid-left+1];
-		int rightSums[] = new int[mid-left];
+		int rightSums[] = new int[mid-left+1];
 		int overallMin=500;
 		
 		//Add conseq sums to left sum
 		int sum = 0;
 		int count = 0;
-		for(k = leftSums.length-1; k >= 0; k--)
+		for(k = mid-left; k >= 0; k--)
 		{
 			sum += a[k];
 			leftSums[count] = sum;
@@ -259,7 +259,7 @@ public class MinSubSumCalc
 		//Add conseq sums to right sum
 		sum = 0;
 		count = 0;
-		for(k = mid+1; k < rightSums.length; k++)
+		for(k = mid+1; k <= right; k++)
 		{
 			sum += a[k];			
 			rightSums[count] = sum;
@@ -269,10 +269,12 @@ public class MinSubSumCalc
 		//Sort the arrays
 		Arrays.sort(leftSums);
 		Arrays.sort(rightSums);
+		System.out.println("LEFT SUMS: " + Arrays.toString(leftSums));
+		System.out.println("RIGHT SUMS: " + Arrays.toString(rightSums));
 		
 		int i = 0; //Starts left side at beginning 
 		int j = rightSums.length-1; //Starts right side at end
-		int check = 500; // Starts check at max range 
+		int check =0; // Starts check at max range 
 		
 		while(j >= 0 && i < leftSums.length)
 		{
@@ -290,6 +292,7 @@ public class MinSubSumCalc
 			if(check < overallMin && check > 0)  
 			{
 				overallMin = check;
+				System.out.println("STORING: " + overallMin);
 			}
 		}
 		return overallMin;

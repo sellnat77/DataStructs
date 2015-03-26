@@ -201,9 +201,9 @@ public class MinSubSumCalc
 	{
 		int mssMin = 500;	
 		
-		if(right == left)
+		if(right==left)
 		{
-			return a[right];
+			return a[left];
 		}
 		
 		int mid = (int) Math.ceil((right+left)/2);
@@ -213,9 +213,9 @@ public class MinSubSumCalc
 		//Carries out most of the work
 		int mssMiddle = jMSSMiddle(a,left,mid,right);
 		
-		System.out.println("Left: " + mssLeft);
-		System.out.println("Middle: " + mssMiddle);
-		System.out.println("Right: " + mssRight);
+		//System.out.println("Left: " + mssLeft);
+		//System.out.println("Middle: " + mssMiddle);
+		//System.out.println("Right: " + mssRight);
 		
 		
 		if(mssMin > mssLeft && mssLeft > 0 )
@@ -228,8 +228,12 @@ public class MinSubSumCalc
 		}
 		if(mssMin > mssMiddle && mssMiddle > 0 )
 		{
-			mssMin = mssMiddle ; 
+			mssMin = mssMiddle ;
+
 		}
+
+		
+
 		
 		return mssMin;
 		 
@@ -238,14 +242,14 @@ public class MinSubSumCalc
 	public int jMSSMiddle(int a[], int left, int mid, int right)
 	{
 		int k;
-		int leftSums[] = new int[mid+1];
-		int rightSums[] = new int[right-mid];
+		int leftSums[] = new int[mid-left+1];
+		int rightSums[] = new int[mid-left];
 		int overallMin=500;
 		
 		//Add conseq sums to left sum
 		int sum = 0;
 		int count = 0;
-		for(k = mid; k >= 0; k--)
+		for(k = leftSums.length-1; k >= 0; k--)
 		{
 			sum += a[k];
 			leftSums[count] = sum;
@@ -255,7 +259,7 @@ public class MinSubSumCalc
 		//Add conseq sums to right sum
 		sum = 0;
 		count = 0;
-		for(k = mid+1; k <= right; k++)
+		for(k = mid+1; k < rightSums.length; k++)
 		{
 			sum += a[k];			
 			rightSums[count] = sum;

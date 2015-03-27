@@ -4,6 +4,7 @@ public class MinSubSumCalc
 {
 	Scanner userIn = new Scanner(System.in);
 	int a[];
+	int mssMin = 500;	
 	String progsToRun;
 	
 	MinSubSumCalc(){}
@@ -189,61 +190,114 @@ public class MinSubSumCalc
 				if(this_sum < min_sum && this_sum > 0)
 				{
 					min_sum = this_sum;
-				}
-				
+				}				
 			}
-
 		}
 		return min_sum;
 	}
 	
 	public int Junior(int a[], int left, int right)
 	{
-		int mssMin = 500;	
+		
 		
 		if(right==left)
 		{
+			System.out.println("Base = " + a[left]);
+			//return this.compTwo(a[right], a[left]);
 			return a[left];
+			/*
+			if(a[left] < 0)
+			{
+				return 500;
+			}
+			else
+			{
+				return a[left];
+			}
+			*/
 		}
 		
-		int mid = (int) Math.ceil((right+left)/2);
+		int mid = (right+left)/2;
 		int mssLeft = Junior(a, left, mid);
 		int mssRight = Junior(a,(mid+1),right);
 		
 		//Carries out most of the work
 		int mssMiddle = jMSSMiddle(a,left,mid,right);
 		
-		System.out.println("Left: " + mssLeft);
-		System.out.println("Middle: " + mssMiddle);
-		System.out.println("Right: " + mssRight);
+		//System.out.println("\t\tLeft: " + mssLeft);
+		//System.out.println("\t\tMiddle: " + mssMiddle);
+		//System.out.println("\t\tRight: " + mssRight);
 		
-		
-		if(mssMin > mssLeft && mssLeft > 0 )
-		{
-			mssMin = mssLeft;
-		}
-		if(mssMin > mssRight && mssRight > 0 )
-		{
-			mssMin = mssRight;
-		}
-		if(mssMin > mssMiddle && mssMiddle > 0 )
-		{
-			mssMin = mssMiddle ;
-
-		}
-
-		
-
+		mssMin = this.compTwo(mssLeft, mssRight);
+		mssMin = this.compTwo(mssMin, mssMiddle);
+		System.out.println("\t\t\tDecided on : " + mssMin);
 		
 		return mssMin;
 		 
+	}
+	public int compTwo(int a, int b)
+	{
+		if( a < 0 && b < 0)
+		{
+			//return 500;
+			
+			if(a > b)
+			{
+				return a;
+			}
+			else 
+			{
+				return b;
+			}
+			
+			
+		}
+		if(a > 0 && b > 0)
+		{
+			if(a < b)
+			{
+				return a;
+			}
+			else 
+			{
+				return b;
+			}
+		}
+		else if(a > 0 && b < 0)
+		{
+			if(a + b > 0 && a+b < a)
+			{
+				return a+b;
+			}
+			else
+			{
+				return a;
+			}
+		}
+		else if( a < 0 && b > 0)
+		{
+			if(a + b > 0 && a+b < b)
+			{
+				return a+b;
+			}
+			else
+			{
+				return b;
+			}
+		}
+		else
+		{
+			return 500;
+		}
+		
+		
 	}
 
 	public int jMSSMiddle(int a[], int left, int mid, int right)
 	{
 		int k;
-		int leftSums[] = new int[mid-left+1];
-		int rightSums[] = new int[mid-left+1];
+		int leftSums[] = new int[(mid-left)+1];
+		int rightSums[] = new int[right-mid];
 		int overallMin=500;
 		
 		//Add conseq sums to left sum
@@ -274,7 +328,7 @@ public class MinSubSumCalc
 		
 		int i = 0; //Starts left side at beginning 
 		int j = rightSums.length-1; //Starts right side at end
-		int check =0; // Starts check at max range 
+		int check =500; // Starts check at max range 
 		
 		while(j >= 0 && i < leftSums.length)
 		{

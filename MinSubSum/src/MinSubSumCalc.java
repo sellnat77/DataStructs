@@ -3,7 +3,7 @@ import java.util.*;
 public class MinSubSumCalc
 {
 	Scanner userIn = new Scanner(System.in);
-	int a[];
+	int ar[];
 	int mssMin = 500;	
 	String progsToRun;
 	
@@ -15,7 +15,7 @@ public class MinSubSumCalc
 	}
 	public int getALength()
 	{
-		return a.length;
+		return ar.length;
 	}
 	
 	public void setProgsToRun(String progs)
@@ -24,20 +24,20 @@ public class MinSubSumCalc
 	}
 	public void setALength(int size)
 	{
-		a = new int[size];
+		ar = new int[size];
 	}
 	
 	public void debugArray()
 	{
 		this.setALength(8);
-		this.a[0] = -34;
-		this.a[1] = 49;
-		this.a[2] = -58;
-		this.a[3] = 76;
-		this.a[4] = 29;
-		this.a[5] = -71;
-		this.a[6] = -54;
-		this.a[7] = 63;
+		this.ar[0] = -34;
+		this.ar[1] = 49;
+		this.ar[2] = -58;
+		this.ar[3] = 76;
+		this.ar[4] = 29;
+		this.ar[5] = -71;
+		this.ar[6] = -54;
+		this.ar[7] = 63;
 	}
 	
 	public void showMenu()
@@ -87,7 +87,7 @@ public class MinSubSumCalc
 				this.quit();
 				break;
 			case 5:
-				System.out.println(Arrays.toString(a));
+				System.out.println(Arrays.toString(ar));
 				break;
 			default:
 				System.out.println("");
@@ -108,9 +108,9 @@ public class MinSubSumCalc
 		
 		for(k = 0; k < this.getALength(); k++)
 		{
-			a[k] = Integer.parseInt(temp[k]);
+			ar[k] = Integer.parseInt(temp[k]);
 			
-			System.out.println((k+1)+".) " + a[k]);
+			System.out.println((k+1)+".) " + ar[k]);
 		}
 	}
 	
@@ -124,7 +124,7 @@ public class MinSubSumCalc
 		for(k = 0; k < size; k++)
 		{
 			//a[k] = (int)((Math.random()*10)%10+1)-5;
-			a[k] = (int)((Math.random()*500)%500+1)-250;
+			ar[k] = (int)((Math.random()*500)%500+1)-250;
 			//System.out.println(a[k]+"\n");
 		}
 	}
@@ -155,7 +155,7 @@ public class MinSubSumCalc
 			{
 				System.out.println("Running junior");
 				timeTaken = System.nanoTime();
-				System.out.println("\tMin Sum: "+this.Junior(a, 0, (this.getALength()-1)));
+				System.out.println("\tMin Sum: "+this.Junior(ar, 0, (this.getALength()-1)));
 				timeTaken = System.nanoTime() - timeTaken;
 				this.checkTime(timeTaken);
 			}	
@@ -186,7 +186,7 @@ public class MinSubSumCalc
 			this_sum = 0;
 			for(int j = i; j < this.getALength(); j++)
 			{
-				this_sum += a[j];
+				this_sum += ar[j];
 				if(this_sum < min_sum && this_sum > 0)
 				{
 					min_sum = this_sum;
@@ -200,11 +200,11 @@ public class MinSubSumCalc
 	{
 		
 		
-		if(right==left)
+		if(right-left <= 2)
 		{
-			System.out.println("Base = " + a[left]);
-			//return this.compTwo(a[right], a[left]);
-			return a[left];
+			System.out.println("Left Comp = " + a[left] + " Right Comp = " + a[right]);
+			return this.compTwo(a[right], a[left]);
+			//return a[left];
 			/*
 			if(a[left] < 0)
 			{
@@ -217,16 +217,16 @@ public class MinSubSumCalc
 			*/
 		}
 		
-		int mid = (right+left)/2;
+		int mid = (int)Math.ceil((right+left)/2);
 		int mssLeft = Junior(a, left, mid);
 		int mssRight = Junior(a,(mid+1),right);
 		
 		//Carries out most of the work
 		int mssMiddle = jMSSMiddle(a,left,mid,right);
 		
-		//System.out.println("\t\tLeft: " + mssLeft);
-		//System.out.println("\t\tMiddle: " + mssMiddle);
-		//System.out.println("\t\tRight: " + mssRight);
+		System.out.println("\t\tLeft: " + mssLeft);
+		System.out.println("\t\tMiddle: " + mssMiddle);
+		System.out.println("\t\tRight: " + mssRight);
 		
 		mssMin = this.compTwo(mssLeft, mssRight);
 		mssMin = this.compTwo(mssMin, mssMiddle);
@@ -239,8 +239,8 @@ public class MinSubSumCalc
 	{
 		if( a < 0 && b < 0)
 		{
-			//return 500;
-			
+			return 500;
+			/*
 			if(a > b)
 			{
 				return a;
@@ -249,6 +249,7 @@ public class MinSubSumCalc
 			{
 				return b;
 			}
+			*/
 			
 			
 		}

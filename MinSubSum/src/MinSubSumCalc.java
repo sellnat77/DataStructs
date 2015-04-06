@@ -200,9 +200,9 @@ public class MinSubSumCalc
 	{
 		
 		
-		if(right-left <= 2)
+		if(right-left < 2)
 		{
-			System.out.println("Left Comp = " + a[left] + " Right Comp = " + a[right]);
+			//System.out.println("Left Comp = " + a[left] + " Right Comp = " + a[right]);
 			return this.compTwo(a[right], a[left]);
 			//return a[left];
 			/*
@@ -217,23 +217,23 @@ public class MinSubSumCalc
 			*/
 		}
 		
-		int mid = (int)Math.ceil((right+left)/2);
-		int mssLeft = Junior(a, left, mid);
-		int mssRight = Junior(a,(mid+1),right);
+		int mid = (int)(right+left)/2;
+		//int mssLeft = Junior(a, left, mid);
+		//int mssRight = Junior(a,(mid+1),right);
 		
 		//Carries out most of the work
-		int mssMiddle = jMSSMiddle(a,left,mid,right);
+		//int mssMiddle = jMSSMiddle(a,left,mid,right);
 		
-		System.out.println("\t\tLeft: " + mssLeft);
-		System.out.println("\t\tMiddle: " + mssMiddle);
-		System.out.println("\t\tRight: " + mssRight);
+		//System.out.println("\t\tLeft: " + mssLeft);
+		//System.out.println("\t\tMiddle: " + mssMiddle);
+		//System.out.println("\t\tRight: " + mssRight);
 		
-		mssMin = this.compTwo(mssLeft, mssRight);
-		mssMin = this.compTwo(mssMin, mssMiddle);
-		System.out.println("\t\t\tDecided on : " + mssMin);
+		//mssMin = this.compTwo(mssLeft, mssRight);
+		//mssMin = this.compTwo(mssMin, mssMiddle);
+		//System.out.println("\t\t\tDecided on : " + mssMin);
 		
-		return mssMin;
-		 
+		//return mssMin;
+		return this.compTwo(Junior(a, left, mid), this.compTwo(Junior(a,(mid+1),right),  jMSSMiddle(a,left,mid,right)));
 	}
 	public int compTwo(int a, int b)
 	{
@@ -324,8 +324,8 @@ public class MinSubSumCalc
 		//Sort the arrays
 		Arrays.sort(leftSums);
 		Arrays.sort(rightSums);
-		System.out.println("LEFT SUMS: " + Arrays.toString(leftSums));
-		System.out.println("RIGHT SUMS: " + Arrays.toString(rightSums));
+		//System.out.println("LEFT SUMS: " + Arrays.toString(leftSums));
+		//System.out.println("RIGHT SUMS: " + Arrays.toString(rightSums));
 		
 		int i = 0; //Starts left side at beginning 
 		int j = rightSums.length-1; //Starts right side at end
@@ -334,6 +334,7 @@ public class MinSubSumCalc
 		while(j >= 0 && i < leftSums.length)
 		{
 			check = leftSums[i] + rightSums[j];
+			//System.out.println(""+leftSums[i]+" "+rightSums[j]+"");
 
 			if(check <= 0 )
 			{
@@ -344,10 +345,12 @@ public class MinSubSumCalc
 				j--;
 			}
 			
+			//System.out.println("\t\t\t\t\nCHECK = " + check);
+			
 			if(check < overallMin && check > 0)  
 			{
 				overallMin = check;
-				System.out.println("STORING: " + overallMin);
+				//System.out.println("STORING: " + overallMin);
 			}
 		}
 		return overallMin;

@@ -216,10 +216,9 @@ public class MinSubSumCalc
 	
 	public int compTwo(int a, int b)
 	{
-		if( a < 0 && b < 0)
+		if( a <= 0 && b <= 0)
 		{
-			return 500;
-			
+			return 500;	
 		}
 		if(a > 0 && b > 0)
 		{
@@ -232,7 +231,7 @@ public class MinSubSumCalc
 				return b;
 			}
 		}
-		else if(a > 0 && b < 0)
+		else if(a > 0 && b <= 0)
 		{
 			if(a + b > 0 && a+b < a)
 			{
@@ -243,7 +242,7 @@ public class MinSubSumCalc
 				return a;
 			}
 		}
-		else if( a < 0 && b > 0)
+		else if( a <= 0 && b > 0)
 		{
 			
 			if(a + b > 0 && a+b < b)

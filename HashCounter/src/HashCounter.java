@@ -7,7 +7,7 @@ public class HashCounter
 	Scanner userIn = new Scanner(System.in);
 	int ar[];
 	int hashSize;
-	int capacity = (int)(Math.floor(hashSize/2));
+	int capacity;
 	String progsToRun;
 	int probeIndex = 0;
 	int power = 1;
@@ -37,7 +37,7 @@ public class HashCounter
 	
 	public void showMenu()
 	{
-		System.out.println("\n0. Use debug array");
+		System.out.println("\n0. Initialize the tables of a particular size");
 		System.out.println("1. Enter comma delimited list of ints");
 		System.out.println("2. Enter length of array for random numbers");
 		System.out.println("3. Enter the string of programs to run\n"
@@ -60,10 +60,13 @@ public class HashCounter
 			switch(selection)
 			{
 			case 0:
+				System.out.println("Please enter the size of the tables: ");
+				this.tableInit();
+				this.showTables();
 				this.runAlgorithms(this.enterMethodsToRun());
 				break;
 			case 1:
-				System.out.println("Please enter the ints for the array to find the mss separated by commas: ");
+				System.out.println("Please enter the ints for the array to find the mode separated by commas: ");
 				this.inputArray();
 				this.runAlgorithms(this.enterMethodsToRun());
 				break;
@@ -89,6 +92,28 @@ public class HashCounter
 		}
 	}
 	
+	private void showTables() 
+	{
+		int k;
+		
+		System.out.print("\n\n\tHash Table\t");
+		for(k = 0; k < capacity; k++)
+		{
+			System.out.format(" |%4d| ",hashedPotatoes[k]);
+		}
+		System.out.print("\n\n\tCounting Table\t");
+		for(k = 0; k < capacity; k++)
+		{
+			System.out.format(" |%4d| ",potatoCounter[k]);
+		}
+		System.out.print("\n\n\tIndex\t\t");
+		for(k = 0; k < capacity; k++)
+		{
+			System.out.format(" |%4d| ",k);
+		}
+		
+	}
+
 	public void inputArray()
 	{
 		int k;
@@ -107,19 +132,45 @@ public class HashCounter
 		}
 	}
 	
+	public void tableInit()
+	{
+		int k;
+		hashSize = userIn.nextInt();
+		capacity = (int)(Math.floor(hashSize/2));
+		
+		ar = new int[capacity];
+		hashedPotatoes = new int[capacity];
+		potatoCounter = new int[capacity];
+		
+		for(k = 0; k < capacity; k++)
+		{
+			ar[k] = 0;
+			hashedPotatoes[k] = 0;
+			potatoCounter[k] = 0;
+		}
+	}
+	
 	public void enterArrayLength()
 	{
-		int size;
+		int value;
 		int k;
-		size = userIn.nextInt();
-		this.setALength(size);
+		hashSize = userIn.nextInt();
+		capacity = (int)(Math.floor(hashSize/2));
 		
-		for(k = 0; k < size; k++)
+		ar = new int[capacity];
+		hashedPotatoes = new int[capacity];
+		potatoCounter = new int[capacity];
+		
+		for(k = 0; k < capacity; k++)
 		{
+			value = (int)((Math.random()*500)%500+1)-250;
 			//a[k] = (int)((Math.random()*10)%10+1)-5;
-			ar[k] = (int)((Math.random()*500)%500+1)-250;
+			ar[k] = value;
+			this.add(value);
+			
 			//System.out.println(a[k]+"\n");
 		}
+		this.showTables();
 	}
 	
 	public String enterMethodsToRun()
@@ -138,15 +189,17 @@ public class HashCounter
 		{
 			if(methodsToRun.charAt(k) == '1')
 			{
-				System.out.println("Running sophomore");
+				System.out.println("Running slow");
 				timeTaken = System.nanoTime();
+				System.out.println("\tMode = " + this.getModeSlow(ar, capacity));
 				timeTaken = System.nanoTime() - timeTaken;
 				this.checkTime(timeTaken);
 			}
 			else if(methodsToRun.charAt(k) == '2')
 			{
-				System.out.println("Running junior");
+				System.out.println("Running fast");
 				timeTaken = System.nanoTime();
+				System.out.println("\tMode = " + this.getModeHash(potatoCounter,capacity));
 				timeTaken = System.nanoTime() - timeTaken;
 				this.checkTime(timeTaken);
 			}	
@@ -154,6 +207,8 @@ public class HashCounter
 		
 	}
 	
+
+
 	public void checkTime(long timeTaken)
 	{
 		if(timeTaken/10000 > 1000)
@@ -170,7 +225,7 @@ public class HashCounter
 	{
 		System.out.println("Original value = " + val);
 		probeIndex = 0;
-		val = (int)(((char)(val))*Math.pow(37,power ));
+		val = (int)(val*37);
 		power++;
 		System.out.println("Hashed value = " + val);
 		
@@ -181,14 +236,14 @@ public class HashCounter
 	{
 		int index = hash(val)%capacity;
 		probeIndex = 0;
-		System.out.println("Index in hash table = " + index);
-		System.out.println("Index in counting array = " + index);
+		//System.out.println("Index in hash table = " + index);
+		//System.out.println("Index in counting array = " + index);
 		
 		int nextIndex,newCount;
 		
 		while(true)
 		{
-			nextIndex = ((int)(index+Math.pow(probeIndex, 2)))%capacity;
+			nextIndex = ((int)(probeIndex+Math.pow(index, 2)))%capacity;
 			
 			if(potatoCounter[nextIndex] == 0)
 			{
@@ -210,8 +265,8 @@ public class HashCounter
 	{
 		int index = hash(val)%capacity;
 		probeIndex = 0;
-		System.out.println("Index in hash table = " + index);
-		System.out.println("Index in counting array = " + index);
+		//System.out.println("Index in hash table = " + index);
+		//System.out.println("Index in counting array = " + index);
 		
 		int nextIndex,newCount;
 		
@@ -239,8 +294,8 @@ public class HashCounter
 	{
 		int index = hash(val)%capacity;
 		probeIndex = 0;
-		System.out.println("Index in hash table = " + index);
-		System.out.println("Index in counting array = " + index);
+		//System.out.println("Index in hash table = " + index);
+		//System.out.println("Index in counting array = " + index);
 		
 		int nextIndex;
 		
@@ -282,7 +337,20 @@ public class HashCounter
 		return mode;
 	}
 	
+	private int getModeHash(int[] a, int capacity)
+	{
+		int k;
+		int mode = 0;
+		for(k = 0; k < capacity; k++)
+		{
+			if(a[k] > mode)
+			{
+				mode = hashedPotatoes[k];
+			}
+		}
 	
+		return mode;
+	}
 	
 	
 	public void quit()

@@ -63,7 +63,6 @@ public class HashCounter
 				System.out.println("Please enter the size of the tables: ");
 				this.tableInit();
 				this.showTables();
-				this.runAlgorithms(this.enterMethodsToRun());
 				break;
 			case 1:
 				System.out.println("Please enter the ints for the array to find the mode separated by commas: ");
@@ -163,8 +162,8 @@ public class HashCounter
 		
 		for(k = 0; k < capacity; k++)
 		{
-			value = (int)((Math.random()*500)%500+1)-250;
-			//a[k] = (int)((Math.random()*10)%10+1)-5;
+			//value = (int)((Math.random()*500)%500+1)-250;
+			value = (int)((Math.random()*10)%10+1)-5;
 			ar[k] = value;
 			this.add(value);
 			
@@ -225,7 +224,7 @@ public class HashCounter
 	{
 		System.out.println("Original value = " + val);
 		probeIndex = 0;
-		val = (int)(val*37);
+		val = Math.abs((int)(val*37));
 		power++;
 		System.out.println("Hashed value = " + val);
 		
@@ -236,14 +235,14 @@ public class HashCounter
 	{
 		int index = hash(val)%capacity;
 		probeIndex = 0;
-		//System.out.println("Index in hash table = " + index);
-		//System.out.println("Index in counting array = " + index);
+		System.out.println("\tIndex in hash table = " + index);
+		System.out.println("\tIndex in counting array = " + index);
 		
 		int nextIndex,newCount;
 		
 		while(true)
 		{
-			nextIndex = ((int)(probeIndex+Math.pow(index, 2)))%capacity;
+			nextIndex = ((int)(probeIndex+(index*index)))%capacity;
 			
 			if(potatoCounter[nextIndex] == 0)
 			{
@@ -341,15 +340,17 @@ public class HashCounter
 	{
 		int k;
 		int mode = 0;
+		int modeIndex = 0;
 		for(k = 0; k < capacity; k++)
 		{
-			if(a[k] > mode)
+			if(potatoCounter[k] > mode && potatoCounter[k] != 0)
 			{
-				mode = hashedPotatoes[k];
+				modeIndex = k;
+				mode = potatoCounter[k];
 			}
 		}
 	
-		return mode;
+		return hashedPotatoes[modeIndex];
 	}
 	
 	

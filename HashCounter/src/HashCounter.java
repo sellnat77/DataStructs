@@ -195,7 +195,7 @@ public class HashCounter
 		for(k = 0; k < capacity; k++)
 		{
 			//value = (int)((Math.random()*500)%500+1)-250;
-			value = (int)((Math.random()*10)%10+1)-5;
+			value = (int)((Math.random()*5)%5+1)-2;
 			ar.add(value);
 			this.add(value);
 			
@@ -301,13 +301,7 @@ public class HashCounter
 		{
 			nextIndex = ((int)(index+Math.pow(probeIndex, 2)))%capacity;
 			
-			if(potatoCounter[nextIndex] == 0)
-			{
-				hashedPotatoes[nextIndex] = val;
-				potatoCounter[nextIndex] = 1;
-				break;
-			}
-			else if (val == hashedPotatoes[nextIndex])
+			if (val == hashedPotatoes[nextIndex])
 			{
 				newCount = potatoCounter[nextIndex]-1;
 				potatoCounter[nextIndex] = newCount;

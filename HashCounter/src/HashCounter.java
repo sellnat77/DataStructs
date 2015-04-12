@@ -1,11 +1,10 @@
-import java.util.Arrays;
-import java.util.Hashtable;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class HashCounter
 {
 	Scanner userIn = new Scanner(System.in);
-	int ar[];
+	ArrayList<Integer> ar;
 	int hashSize;
 	int capacity;
 	String progsToRun;
@@ -23,16 +22,12 @@ public class HashCounter
 	}
 	public int getALength()
 	{
-		return ar.length;
+		return ar.size();
 	}
 	
 	public void setProgsToRun(String progs)
 	{
 		progsToRun = progs;
-	}
-	public void setALength(int size)
-	{
-		ar = new int[size];
 	}
 	
 	public void showMenu()
@@ -51,11 +46,13 @@ public class HashCounter
 	
 	public void getInput()
 	{
+		int val;
 		int selection = 0;
 		boolean again = true;
 
 		while(again)
 		{
+			
 			this.showMenu();
 			System.out.println("\nPlease choose what you would like to do: ");
 			selection = Integer.parseInt(userIn.next());
@@ -86,16 +83,22 @@ public class HashCounter
 				break;
 			//Add val
 			case 4:
-				//TODO
-				this.add(5);
+				System.out.println("Please enter the number you want to add: ");
+				val = userIn.nextInt();
+				ar.add(val);
+				this.add(val);
 				break;
 			//Sub val
 			case 5:
-				this.runAlgorithms(this.enterMethodsToRun());
+				System.out.println("Please enter the number you want to take out: ");
+				val = userIn.nextInt();
+				ar.remove(val);
+				this.sub(val);
 				break;
 			//get count
 			case 6:
-				this.runAlgorithms(this.enterMethodsToRun());
+				System.out.println("Please enter the number you want to find the count for: ");
+				this.count(userIn.nextInt());
 				break;
 			//Exit
 			case 7:
@@ -116,6 +119,8 @@ public class HashCounter
 	private void showTables() 
 	{
 		int k;
+		
+		System.out.println("\n\n\tBase array\t" + ar.toString());
 		
 		System.out.print("\n\n\tHash Table\t");
 		for(k = 0; k < capacity; k++)
@@ -146,13 +151,14 @@ public class HashCounter
 		hashSize = temp.length;
 		capacity = (int)(Math.floor(hashSize/2));
 		
-		ar = new int[hashSize];
+		ar = new ArrayList<Integer>();
+		
 		hashedPotatoes = new int[capacity];
 		potatoCounter = new int[capacity];
 		
 		for(k = 0; k < hashSize; k++)
 		{
-			ar[k] = Integer.parseInt(temp[k]);
+			ar.add(Integer.parseInt(temp[k]));
 			this.add(Integer.parseInt(temp[k]));
 		}
 	}
@@ -163,15 +169,15 @@ public class HashCounter
 		hashSize = userIn.nextInt();
 		capacity = (int)(Math.floor(hashSize/2));
 		
-		ar = new int[capacity];
+		ar = new ArrayList<Integer>();
 		hashedPotatoes = new int[capacity];
 		potatoCounter = new int[capacity];
 		
 		for(k = 0; k < capacity; k++)
 		{
-			ar[k] = 0;
-			hashedPotatoes[k] = 0;
-			potatoCounter[k] = 0;
+			//ar.add(2147483647);
+			hashedPotatoes[k] = 2147483647;
+			potatoCounter[k] = 2147483647;
 		}
 	}
 	
@@ -182,7 +188,7 @@ public class HashCounter
 		hashSize = userIn.nextInt();
 		capacity = (int)(Math.floor(hashSize/2));
 		
-		ar = new int[capacity];
+		ar = new ArrayList<Integer>();
 		hashedPotatoes = new int[capacity];
 		potatoCounter = new int[capacity];
 		
@@ -190,7 +196,7 @@ public class HashCounter
 		{
 			//value = (int)((Math.random()*500)%500+1)-250;
 			value = (int)((Math.random()*10)%10+1)-5;
-			ar[k] = value;
+			ar.add(value);
 			this.add(value);
 			
 			//System.out.println(a[k]+"\n");
@@ -216,7 +222,7 @@ public class HashCounter
 			{
 				System.out.println("Running slow");
 				timeTaken = System.nanoTime();
-				System.out.println("\tMode = " + this.getModeSlow(ar, ar.length));
+				System.out.println("\tMode = " + this.getModeSlow(ar, ar.size()));
 				timeTaken = System.nanoTime() - timeTaken;
 				this.checkTime(timeTaken);
 			}
@@ -261,8 +267,6 @@ public class HashCounter
 	{
 		int index = hash(val)%capacity;
 		probeIndex = 0;
-		//System.out.println("\tIndex in hash table = " + index);
-		//System.out.println("\tIndex in counting array = " + index);
 		
 		int nextIndex,newCount;
 		
@@ -290,8 +294,6 @@ public class HashCounter
 	{
 		int index = hash(val)%capacity;
 		probeIndex = 0;
-		//System.out.println("Index in hash table = " + index);
-		//System.out.println("Index in counting array = " + index);
 		
 		int nextIndex,newCount;
 		
@@ -319,8 +321,6 @@ public class HashCounter
 	{
 		int index = hash(val)%capacity;
 		probeIndex = 0;
-		//System.out.println("Index in hash table = " + index);
-		//System.out.println("Index in counting array = " + index);
 		
 		int nextIndex;
 		
@@ -329,13 +329,15 @@ public class HashCounter
 			nextIndex = ((int)(index+Math.pow(probeIndex, 2)))%capacity;
 			if (val == hashedPotatoes[nextIndex])
 			{
+				System.out.println("Found " + potatoCounter[nextIndex] + " instances of " + hashedPotatoes[nextIndex]);
 				return potatoCounter[nextIndex];
 			}
 			probeIndex++;
 		}
+		//System.out.println("Could not find the value you're looking for.");
 	}
 	
-	public int getModeSlow(int a[],int n)
+	public int getModeSlow(ArrayList<Integer> arrayToMode,int n)
 	{
 		int mode = 0;
 		int max_count = 0;
@@ -343,12 +345,12 @@ public class HashCounter
 		
 		for(i = 0; i < n; i++)
 		{
-			candidate = a[i];
+			candidate = arrayToMode.get(i);
 			count = 1; 
 			
 			for(j = 0; j < n; j++)
 			{
-				if(a[j] == candidate)
+				if(arrayToMode.get(j) == candidate)
 				{
 					count++;
 				}
@@ -378,6 +380,7 @@ public class HashCounter
 	
 		return hashedPotatoes[modeIndex];
 	}
+	
 	
 	
 	public void quit()

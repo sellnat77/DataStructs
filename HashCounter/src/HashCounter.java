@@ -86,14 +86,18 @@ public class HashCounter
 				System.out.println("Please enter the number you want to add: ");
 				val = userIn.nextInt();
 				ar.add(val);
+				System.out.println("\tAdded to array list.");
 				this.add(val);
+				System.out.println("\tAdded to hash table.");
 				break;
 			//Sub val
 			case 5:
 				System.out.println("Please enter the number you want to take out: ");
 				val = userIn.nextInt();
-				ar.remove(val);
+				ar.remove(ar.indexOf(val));
+				System.out.println("\tRemoved from array list.");
 				this.sub(val);
+				System.out.println("\tRemoved from hash table.");
 				break;
 			//get count
 			case 6:
@@ -137,6 +141,7 @@ public class HashCounter
 		{
 			System.out.format(" |%4d| ",k);
 		}
+		System.out.println("");
 		
 	}
 
@@ -254,13 +259,16 @@ public class HashCounter
 	
 	public int hash(int val)
 	{
-		//System.out.println("Original value = " + val);
-		probeIndex = 0;
-		val = Math.abs((int)(val*37));
-		power++;
-		//System.out.println("Hashed value = " + val);
+		int k;
+		String temp = "" + val;
+		int hashed = 0;
 		
-		return val;
+		for( k = 0; k < temp.length(); k++)
+		{
+			hashed += temp.charAt(k)*Math.pow(37, temp.length()-k);
+		}
+
+		return hashed;
 	}
 	
 	public int add(int val)
@@ -300,6 +308,8 @@ public class HashCounter
 		while(true)
 		{
 			nextIndex = ((int)(index+Math.pow(probeIndex, 2)))%capacity;
+			
+			System.out.println("Index = " + nextIndex);
 			
 			if (val == hashedPotatoes[nextIndex])
 			{

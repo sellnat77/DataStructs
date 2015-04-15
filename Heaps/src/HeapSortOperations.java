@@ -4,6 +4,7 @@ import java.util.Scanner;
 public class HeapSortOperations 
 {
 	int[] tree;
+	int load;
 	Scanner userIn = new Scanner(System.in);
 	
 
@@ -152,12 +153,11 @@ public class HeapSortOperations
 	void heapSort(int[] arrayToSort) 
 	{
 		int k;
-		int load = getArLoad(arrayToSort);
 		build_heap(arrayToSort);
 		
 		for(k = load; k > 0; k--)
 		{
-			swap(arrayToSort,k,0);
+			swap(arrayToSort,0,k);
 			load--;
 			minHeap(arrayToSort,0);
 		}
@@ -166,7 +166,7 @@ public class HeapSortOperations
 	void build_heap(int[] arrayToHeap)
 	{
 		int k;
-		int load = getArLoad(arrayToHeap)-1;
+		load = getArLoad(arrayToHeap)-1;
 		
 		for(k = load/2; k >= 0; k--)
 		{
@@ -176,7 +176,6 @@ public class HeapSortOperations
 
 	void minHeap(int[] arrayToHeap, int k) 
 	{
-		int load = getArLoad(arrayToHeap);
 		int left = 2*k;
 		int right = left+1;
 		int min = k;
@@ -251,12 +250,10 @@ public class HeapSortOperations
 	
 	int pop()
 	{
-		int load = getArLoad(tree);
+		load = getArLoad(tree);
 		int top = tree[0];
 		
-		tree[0] = tree[load];
-		tree[load] = 9999;
-		load--;
+		tree[0] = tree[load--];
 		
 		
 		percolateDown(0);
@@ -266,7 +263,6 @@ public class HeapSortOperations
 	void percolateDown(int index) 
 	{
 		int child;
-		int load = getArLoad(tree);
 		int temp = tree[index];
 		for(; (child = 2*index) <= load; index = child)
 		{

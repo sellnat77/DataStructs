@@ -67,7 +67,9 @@ public class HeapSortOperations
 				break;
 			//Pop
 			case 3:
+				load = this.getArLoad(tree);
 				System.out.println("The value popped is : " + this.pop() + "\n\tThe tree is ");
+				
 				this.showTree(tree);
 				break;
 			//Show Sorted
@@ -153,6 +155,7 @@ public class HeapSortOperations
 	void heapSort(int[] arrayToSort) 
 	{
 		int k;
+		
 		build_heap(arrayToSort);
 		
 		for(k = load; k > 0; k--)
@@ -161,11 +164,11 @@ public class HeapSortOperations
 			load--;
 			minHeap(arrayToSort,0);
 		}
-		
 	}
 	void build_heap(int[] arrayToHeap)
 	{
 		int k;
+		
 		load = getArLoad(arrayToHeap)-1;
 		
 		for(k = load/2; k >= 0; k--)
@@ -177,23 +180,22 @@ public class HeapSortOperations
 	void minHeap(int[] arrayToHeap, int k) 
 	{
 		int left = 2*k;
-		int right = left+1;
+		int right = 2*k+1;
 		int min = k;
 		
-		if(left <= load && arrayToHeap[right] < arrayToHeap[min])
-		{
-			min = right;
-		}
-		if(right <= load && arrayToHeap[left] < arrayToHeap[min])
+		if(left <= load && arrayToHeap[left] > arrayToHeap[k])
 		{
 			min = left;
+		}
+		if(right <= load && arrayToHeap[right] > arrayToHeap[min])
+		{
+			min = right;
 		}
 		if(min != k)
 		{
 			swap(arrayToHeap,k,min);
 			minHeap(arrayToHeap,min);
 		}
-		
 	}
 
 	void swap(int[] arrayToHeap, int k, int min) 
@@ -216,8 +218,6 @@ public class HeapSortOperations
 		for(k = 0; k < tree.length; k++)
 		{
 			this.insert(Integer.parseInt(temp[k]));
-			//ar.add(Integer.parseInt(temp[k]));
-			//this.add(Integer.parseInt(temp[k]));
 		}
 	}
 
@@ -250,12 +250,12 @@ public class HeapSortOperations
 	
 	int pop()
 	{
-		load = getArLoad(tree);
+		load = this.getArLoad(tree);
 		int top = tree[0];
-		
-		tree[0] = tree[load--];
-		
-		
+
+		tree[0] = tree[load];
+		tree[load] = 9999;
+		load--;
 		percolateDown(0);
 		return top;
 	}
@@ -266,6 +266,7 @@ public class HeapSortOperations
 		int temp = tree[index];
 		for(; (child = 2*index) <= load; index = child)
 		{
+			
 			if(child != load && tree[child+1] < tree[child])
 			{
 				child++;
@@ -279,7 +280,6 @@ public class HeapSortOperations
 				break;
 			}
 		}
-		tree[index] = temp;
 	}
 	
 	int getArLoad(int[] array)

@@ -179,8 +179,8 @@ public class HeapSortOperations
 
 	void minHeap(int[] arrayToHeap, int k) 
 	{
-		int left = 2*k;
-		int right = 2*k+1;
+		int left = 2*k+1;
+		int right = 2*k+2;
 		int min = k;
 		
 		if(left <= load && arrayToHeap[left] > arrayToHeap[k])
@@ -254,9 +254,9 @@ public class HeapSortOperations
 		int top = tree[0];
 
 		tree[0] = tree[load];
-		tree[load] = 9999;
 		load--;
 		percolateDown(0);
+		this.heapSort(tree);
 		return top;
 	}
 	
@@ -267,7 +267,7 @@ public class HeapSortOperations
 		for(; (child = 2*index) <= load; index = child)
 		{
 			
-			if(child != load && tree[child+1] < tree[child])
+			if(child != load && tree[child+2] < tree[child+1])
 			{
 				child++;
 			}

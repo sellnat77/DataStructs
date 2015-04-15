@@ -1,7 +1,5 @@
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
-
 
 public class HeapSortOperations 
 {
@@ -75,6 +73,7 @@ public class HeapSortOperations
 			case 4:
 				System.out.println("\t\tThe sorted tree is : ");
 				this.heapSort(tree);
+				this.showTree(tree);
 				break;
 			//Init Rand + Sort
 			case 5:
@@ -158,7 +157,7 @@ public class HeapSortOperations
 		
 		for(k = load; k > 0; k--)
 		{
-			swap(arrayToSort,0,k);
+			swap(arrayToSort,k,0);
 			load--;
 			minHeap(arrayToSort,0);
 		}
@@ -167,7 +166,7 @@ public class HeapSortOperations
 	void build_heap(int[] arrayToHeap)
 	{
 		int k;
-		int load = getArLoad(tree)-1;
+		int load = getArLoad(arrayToHeap)-1;
 		
 		for(k = load/2; k >= 0; k--)
 		{
@@ -177,18 +176,18 @@ public class HeapSortOperations
 
 	void minHeap(int[] arrayToHeap, int k) 
 	{
-		int load = getArLoad(tree);
+		int load = getArLoad(arrayToHeap);
 		int left = 2*k;
-		int right = 2*k+1;
+		int right = left+1;
 		int min = k;
 		
 		if(left <= load && arrayToHeap[right] < arrayToHeap[min])
 		{
-			min = left;
+			min = right;
 		}
 		if(right <= load && arrayToHeap[left] < arrayToHeap[min])
 		{
-			min = right;
+			min = left;
 		}
 		if(min != k)
 		{
@@ -254,7 +253,12 @@ public class HeapSortOperations
 	{
 		int load = getArLoad(tree);
 		int top = tree[0];
-		tree[0] = tree[load-1];
+		
+		tree[0] = tree[load];
+		tree[load] = 9999;
+		load--;
+		
+		
 		percolateDown(0);
 		return top;
 	}
@@ -279,6 +283,7 @@ public class HeapSortOperations
 				break;
 			}
 		}
+		tree[index] = temp;
 	}
 	
 	int getArLoad(int[] array)

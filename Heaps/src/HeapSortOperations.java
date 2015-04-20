@@ -219,8 +219,8 @@ public class HeapSortOperations
 	public void bSort(int[] arToSort)
 	{
 		int temp;
-		boolean swap = false;
-		for(int j = arToSort.length; j > 0; j--)
+		boolean swap = true;
+		while(swap)
 		{	swap = false;
 			for(int k = arToSort.length-1; k > 0; k--)
 			{
@@ -232,10 +232,6 @@ public class HeapSortOperations
 
 					swap          = true;
 				}
-			}
-			if(!swap)
-			{
-				break;
 			}
 		}
 	}

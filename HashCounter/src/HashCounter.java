@@ -199,8 +199,8 @@ public class HashCounter
 		
 		for(k = 0; k < capacity; k++)
 		{
-			//value = (int)((Math.random()*500)%500+1)-250;
-			value = (int)((Math.random()*5)%5+1)-2;
+			value = (int)((Math.random()*1000)%1000+1)-500;
+			//value = (int)((Math.random()*5)%5+1)-2;
 			ar.add(value);
 			this.add(value);
 			

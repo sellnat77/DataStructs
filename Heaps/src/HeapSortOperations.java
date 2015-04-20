@@ -5,6 +5,7 @@ public class HeapSortOperations
 {
 	int[] tree;
 	int load;
+	int timesPopped = 0;
 	Scanner userIn = new Scanner(System.in);
 	
 
@@ -68,8 +69,16 @@ public class HeapSortOperations
 			//Pop
 			case 3:
 				load = this.getArLoad(tree);
-				System.out.println("The value popped is : " + this.pop() + "\n\tThe tree is ");
-				
+				if(timesPopped > load )
+				{
+					this.treeInit(load+1);
+					timesPopped = 0;
+					System.out.println("Tree is empty now!");
+				}
+				else
+				{
+					System.out.println("The value popped is : " + this.pop() + "\n\tThe tree is ");
+				}
 				this.showTree(tree);
 				break;
 			//Show Sorted
@@ -102,10 +111,10 @@ public class HeapSortOperations
 	}
 	void runTests(int[] arrayToTest) 
 	{
-		int[] temp1 = arrayToTest;
-		int[] temp2 = arrayToTest;
+		int[] temp1 = arrayToTest.clone();
+		int[] temp2 = arrayToTest.clone();
 		long timeTaken;
-		
+	
 		System.out.println("Running slow");
 		timeTaken = System.nanoTime();
 		Arrays.sort(temp1);
@@ -119,6 +128,7 @@ public class HeapSortOperations
 		this.showTree(temp2);
 		timeTaken = System.nanoTime() - timeTaken;
 		this.checkTime(timeTaken);
+		tree = temp2.clone();
 	}
 
 	void checkTime(long timeTaken) 
@@ -138,20 +148,6 @@ public class HeapSortOperations
 		System.out.println("Good Bye!");
 	}
 
-	void initRand(int val) 
-	{
-		int k;
-		int randVal = 0;
-		tree = new int[val];
-		
-		for( k = 0; k < tree.length; k++)
-		{
-			//tree[k] = (int)((Math.random()*1000)%1000+1)-500;
-			randVal = (int)((Math.random()*1000)%1000+1)-500;
-			this.insert(randVal);
-		}
-	}
-
 	void heapSort(int[] arrayToSort) 
 	{
 		int k;
@@ -169,7 +165,7 @@ public class HeapSortOperations
 	{
 		int k;
 		
-		load = getArLoad(arrayToHeap)-1;
+		load = getArLoad(arrayToHeap);
 		
 		for(k = load/2; k >= 0; k--)
 		{
@@ -203,6 +199,20 @@ public class HeapSortOperations
 		int temp = arrayToHeap[k];
 		arrayToHeap[k] = arrayToHeap[min];
 		arrayToHeap[min] = temp;
+	}
+
+	void initRand(int val) 
+	{
+		int k;
+		int randVal = 0;
+		tree = new int[val];
+		
+		for( k = 0; k < tree.length; k++)
+		{
+			//randVal = (int)((Math.random()*1)%1+1);
+			randVal = (int)((Math.random()*1000)%1000+1)-500;
+			this.insert(randVal);
+		}
 	}
 
 	void inputArray() 
@@ -250,6 +260,7 @@ public class HeapSortOperations
 	
 	int pop()
 	{
+		timesPopped++;
 		load = this.getArLoad(tree);
 		int top = tree[0];
 

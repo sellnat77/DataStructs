@@ -4,6 +4,7 @@ import java.util.Scanner;
 public class HeapSortOperations 
 {
 	int[] tree;
+	int[] buildArray;
 	int load;
 	int timesPopped = 0;
 	Scanner userIn = new Scanner(System.in);
@@ -54,6 +55,7 @@ public class HeapSortOperations
 				System.out.println("Please enter a value to insert");
 				val = userIn.nextInt();
 				this.insert(val);
+				this.build_heap(tree);
 				break;
 			//Pop
 			case 3:
@@ -128,13 +130,17 @@ public class HeapSortOperations
 		int k;
 		int randVal = 0;
 		tree = new int[val];
+		buildArray = new int[val];
 		
 		for( k = 0; k < tree.length; k++)
 		{
 			//randVal = (int)((Math.random()*1)%1+1);
 			randVal = (int)((Math.random()*1000)%1000+1)-500;
-			this.insert(randVal);
+			buildArray[k] = randVal;
+			//this.insert(randVal);
 		}
+		tree = buildArray.clone();
+		this.build_heap(tree);
 	}
 
 	void inputArray() 
@@ -146,11 +152,15 @@ public class HeapSortOperations
 		
 		String[] temp = array.split("\\s*,\\s*");
 		tree = new int[temp.length];
+		buildArray = new int[temp.length];
 	
 		for(k = 0; k < tree.length; k++)
 		{
-			this.insert(Integer.parseInt(temp[k]));
+			buildArray[k] = Integer.parseInt(temp[k]);
+			//this.insert(Integer.parseInt(temp[k]));
 		}
+		tree = buildArray.clone();
+		this.build_heap(tree);
 	}
 
 	void runTests(int[] arrayToTest) 
@@ -163,14 +173,14 @@ public class HeapSortOperations
 		timeTaken = System.nanoTime();
 		bSort(temp1);
 		//Arrays.sort(temp1);
-		this.showTree(temp1);
+		//this.showTree(temp1);
 		timeTaken = System.nanoTime() - timeTaken;
 		this.checkTime(timeTaken);
 		
 		System.out.println("Running fast");
 		timeTaken = System.nanoTime();
 		this.heapSort(temp2);
-		this.showTree(temp2);
+		//this.showTree(temp2);
 		timeTaken = System.nanoTime() - timeTaken;
 		this.checkTime(timeTaken);
 		tree = temp2.clone();
@@ -190,7 +200,7 @@ public class HeapSortOperations
 			//Iterates through entire array
 			swap(arrayToSort,0,k);
 			load--;
-			minHeap(arrayToSort,0);
+			maxHeap(arrayToSort,0);
 		}
 	}
 	void build_heap(int[] arrayToHeap)
@@ -200,32 +210,32 @@ public class HeapSortOperations
 		load = getArLoad(arrayToHeap);
 		
 		//Starts at last internal node and swaps the parent with the children if the children are smaller than
-		//the parent
-		for(k = load/2; k >= 0; k--)
+		//the parent, maintains a min heap for every iteration
+		for(k = load; k >= 0; k--)
 		{
-			minHeap(arrayToHeap, k);
+			maxHeap(arrayToHeap, k);
 		}
 	}
 
-	void minHeap(int[] arrayToHeap, int k) 
+	void maxHeap(int[] arrayToHeap, int k) 
 	{
 		int left = 2*k+1;
 		int right = 2*k+2;
-		int min = k;
+		int max = k;
 		
 		if(left <= load && arrayToHeap[left] > arrayToHeap[k])
 		{
-			min = left;
+			max = left;
 		}
-		if(right <= load && arrayToHeap[right] > arrayToHeap[min])
+		if(right <= load && arrayToHeap[right] > arrayToHeap[max])
 		{
-			min = right;
+			max = right;
 		}
 		//Continuously swaps the current min to the parent position
-		if(min != k)
+		if(max != k)
 		{
-			swap(arrayToHeap,k,min);
-			minHeap(arrayToHeap,min);
+			swap(arrayToHeap,k,max);
+			maxHeap(arrayToHeap,max);
 		}
 	}
 

@@ -117,7 +117,8 @@ public class HeapSortOperations
 	
 		System.out.println("Running slow");
 		timeTaken = System.nanoTime();
-		Arrays.sort(temp1);
+		bSort(temp1);
+		//Arrays.sort(temp1);
 		this.showTree(temp1);
 		timeTaken = System.nanoTime() - timeTaken;
 		this.checkTime(timeTaken);
@@ -214,7 +215,30 @@ public class HeapSortOperations
 			this.insert(randVal);
 		}
 	}
+	
+	public void bSort(int[] arToSort)
+	{
+		int temp;
+		boolean swap = false;
+		for(int j = arToSort.length; j > 0; j--)
+		{	swap = false;
+			for(int k = arToSort.length-1; k > 0; k--)
+			{
+				if(arToSort[k] < arToSort[k-1])
+				{
+					temp          = arToSort[k];
+					arToSort[k]   = arToSort[k-1];
+					arToSort[k-1] = temp;
 
+					swap          = true;
+				}
+			}
+			if(!swap)
+			{
+				break;
+			}
+		}
+	}
 	void inputArray() 
 	{
 		int k;

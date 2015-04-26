@@ -152,14 +152,11 @@ public class HeapSortOperations
 		
 		String[] temp = array.split("\\s*,\\s*");
 		tree = new int[temp.length];
-		buildArray = new int[temp.length];
 	
 		for(k = 0; k < tree.length; k++)
 		{
-			buildArray[k] = Integer.parseInt(temp[k]);
-			//this.insert(Integer.parseInt(temp[k]));
+			tree[k] = Integer.parseInt(temp[k]);
 		}
-		tree = buildArray.clone();
 		this.build_heap(tree);
 	}
 
@@ -192,6 +189,7 @@ public class HeapSortOperations
 		
 		//builds the heap
 		build_heap(arrayToSort);
+		load = getArLoad(arrayToSort);
 		
 		for(k = load; k > 0; k--)
 		{
@@ -211,7 +209,7 @@ public class HeapSortOperations
 		
 		//Starts at last internal node and swaps the parent with the children if the children are smaller than
 		//the parent, maintains a min heap for every iteration
-		for(k = load; k >= 0; k--)
+		for(k = load/2; k >= 0; k--)
 		{
 			maxHeap(arrayToHeap, k);
 		}
@@ -221,21 +219,27 @@ public class HeapSortOperations
 	{
 		int left = 2*k+1;
 		int right = 2*k+2;
-		int max = k;
+		int min = k;
 		
-		if(left <= load && arrayToHeap[left] > arrayToHeap[k])
+		System.out.println("Left: "+left+ " Parent: " + k + " Right: " + right);
+		
+		if(left <= load && arrayToHeap[left] < arrayToHeap[k])
 		{
-			max = left;
+			min = left;
 		}
-		if(right <= load && arrayToHeap[right] > arrayToHeap[max])
+		else
 		{
-			max = right;
+			min = k;
+		}
+		if(right <= load && arrayToHeap[right] < arrayToHeap[min])
+		{
+			min = right;
 		}
 		//Continuously swaps the current min to the parent position
-		if(max != k)
+		if(min != k)
 		{
-			swap(arrayToHeap,k,max);
-			maxHeap(arrayToHeap,max);
+			swap(arrayToHeap,k,min);
+			maxHeap(arrayToHeap,min);
 		}
 	}
 
@@ -311,6 +315,7 @@ public class HeapSortOperations
 				break;
 			}
 		}
+		tree[index] = temp;
 	}
 	
 	int getArLoad(int[] array)
@@ -318,9 +323,12 @@ public class HeapSortOperations
 		int k, count;
 		count = 0;
 		k = 0;
-		while(array[k] != 0 && k < array.length-1)
+		while(k < array.length-1)
 		{
-			count++;
+			if(array[k] != 0)
+			{
+				count++;
+			}
 			k++;
 		}
 		return count;

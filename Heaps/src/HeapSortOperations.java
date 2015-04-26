@@ -177,6 +177,7 @@ public class HeapSortOperations
 		System.out.println("Running fast");
 		timeTaken = System.nanoTime();
 		this.heapSort(temp2);
+		//this.popHeap();
 		//this.showTree(temp2);
 		timeTaken = System.nanoTime() - timeTaken;
 		this.checkTime(timeTaken);
@@ -191,7 +192,7 @@ public class HeapSortOperations
 		build_heap(arrayToSort);
 		load = getArLoad(arrayToSort);
 		
-		for(k = load; k > 0; k--)
+		for(k = load; k >= 0; k--)
 		{
 			//Starting at last element, moves it to the top
 			//swaps down to ensure min-heap
@@ -200,6 +201,18 @@ public class HeapSortOperations
 			load--;
 			maxHeap(arrayToSort,0);
 		}
+	}
+	
+	void popHeap()
+	{
+		int k;
+		int temp[] = new int [tree.length];
+		for(k = tree.length; k>= 0; k--)
+		{
+			temp[k] = pop();
+		}
+		System.out.println("Sorted array = " + Arrays.toString(temp));
+		
 	}
 	void build_heap(int[] arrayToHeap)
 	{
@@ -221,9 +234,9 @@ public class HeapSortOperations
 		int right = 2*k+2;
 		int min = k;
 		
-		System.out.println("Left: "+left+ " Parent: " + k + " Right: " + right);
+		//System.out.println("Left: "+left+ " Parent: " + k + " Right: " + right);
 		
-		if(left <= load && arrayToHeap[left] < arrayToHeap[k])
+		if(left <= load && arrayToHeap[left] > arrayToHeap[k])
 		{
 			min = left;
 		}
@@ -231,7 +244,7 @@ public class HeapSortOperations
 		{
 			min = k;
 		}
-		if(right <= load && arrayToHeap[right] < arrayToHeap[min])
+		if(right <= load && arrayToHeap[right] > arrayToHeap[min])
 		{
 			min = right;
 		}

@@ -8,8 +8,6 @@ public class HeapSortOperations
 	int load;
 	Scanner userIn = new Scanner(System.in);
 	
-
-	
 	void showMenu()
 	{
 		System.out.println("\n0. Initialize the tree to a particular size");
@@ -70,7 +68,6 @@ public class HeapSortOperations
 					System.out.println("The value popped is : " + this.pop() + "\n\tThe tree is ");
 				}
 				this.build_heap(tree);
-				//this.heapSort(tree);
 				this.showTree(tree);
 				break;
 			//Show Sorted
@@ -204,6 +201,8 @@ public class HeapSortOperations
 			swap(arrayToSort,0,k);
 			load--;
 			minHeap(arrayToSort,0);
+			//maxHeap(arrayToSort,0);
+			//this.percolateDown(0);
 		}
 	}
 	
@@ -259,6 +258,33 @@ public class HeapSortOperations
 		{
 			swap(arrayToHeap,k,min);
 			minHeap(arrayToHeap,min);
+		}
+	}
+	void maxHeap(int[] arrayToHeap, int k) 
+	{
+		int left = 2*k+1;
+		int right = 2*k+2;
+		int max = k;
+		
+		//System.out.println("Left: "+left+ " Parent: " + k + " Right: " + right);
+		
+		if(left <= load && arrayToHeap[left] > arrayToHeap[k])
+		{
+			max = left;
+		}
+		else
+		{
+			max = k;
+		}
+		if(right <= load && arrayToHeap[right] > arrayToHeap[max])
+		{
+			max = right;
+		}
+		//Continuously swaps the current min to the parent position
+		if(max != k)
+		{
+			swap(arrayToHeap,k,max);
+			maxHeap(arrayToHeap,max);
 		}
 	}
 

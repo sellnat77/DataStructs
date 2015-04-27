@@ -317,13 +317,29 @@ public class HeapSortOperations
 	void insert(int x)
 	{
 		int hole = getArLoad(tree); 
-		for(; hole > 1 && tree[hole/2] > x; hole /= 2)
+		for(; hole > 1 && tree[hole/2] < x; hole /= 2)
 		{
 			tree[hole] = tree[hole/2];
 		}
 		tree[hole] = x;
+		//percolateUp(hole);
 	}
 	
+	public void percolateUp(int index) 
+	{
+		int parent;
+		if(index != 0)
+		{
+			parent = index/2;
+			if(tree[parent] > tree[index])
+			{
+				this.swap(tree, index, parent);
+				percolateUp(parent);
+			}
+		}
+		
+	}
+
 	int pop()
 	{
 		int[] tempAr = new int[tree.length-1];

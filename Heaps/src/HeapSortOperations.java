@@ -6,7 +6,6 @@ public class HeapSortOperations
 	int[] tree;
 	int[] buildArray;
 	int load;
-	int timesPopped = 0;
 	Scanner userIn = new Scanner(System.in);
 	
 
@@ -21,6 +20,7 @@ public class HeapSortOperations
 		System.out.println("5. Enter a length to generate a random min-heap then sort using arrays.sort and heap sort");
 		System.out.println("6. Exit program.");
 		System.out.println("7. Show array.");
+		System.out.println("8. Sort the heap using heap sort and bubble sort.");
 	}
 
 	public void getInput()
@@ -40,7 +40,6 @@ public class HeapSortOperations
 			{
 			//init bare
 			case 0:
-				timesPopped = 0;
 				System.out.println("Please enter the size of the tree: ");
 				val = userIn.nextInt();
 				this.treeInit(val);
@@ -48,7 +47,6 @@ public class HeapSortOperations
 				break;
 			//input vals
 			case 1:
-				timesPopped = 0;
 				System.out.println("Please enter the ints for the array: ");
 				this.inputArray();
 				break;
@@ -65,29 +63,29 @@ public class HeapSortOperations
 				if(tree.length == 1 )
 				{
 					System.out.println("The value popped is : " + tree[0] + "\n\tThe tree is ");
-					timesPopped = 0;
 					System.out.println("Tree is empty now!");
 				}
 				else
 				{
 					System.out.println("The value popped is : " + this.pop() + "\n\tThe tree is ");
 				}
-				//this.build_heap(tree);
+				this.build_heap(tree);
+				//this.heapSort(tree);
 				this.showTree(tree);
 				break;
 			//Show Sorted
 			case 4:
 				System.out.println("\t\tThe sorted tree is : ");
-				this.heapSort(tree);
+				//this.heapSort(tree);
+				this.popHeap();
 				this.showTree(tree);
 				break;
 			//Init Rand + Sort
 			case 5:
-				timesPopped = 0;
 				System.out.println("Please enter the length of random numbers to insert into the tree");
 				val = userIn.nextInt();
 				this.initRand(val);
-				this.runTests(tree);
+				//this.runTests(tree);
 				break;
 			//Exit
 			case 6:
@@ -97,6 +95,9 @@ public class HeapSortOperations
 			//Show tree
 			case 7:
 				this.showTree(tree);
+				break;
+			case 8:
+				this.runTests(tree);
 				break;
 			default:
 				System.out.println("");
@@ -133,16 +134,16 @@ public class HeapSortOperations
 		int k;
 		int randVal = 0;
 		tree = new int[val];
-		buildArray = new int[val];
+		//buildArray = new int[val];
 		
 		for( k = 0; k < tree.length; k++)
 		{
 			//randVal = (int)((Math.random()*1)%1+1);
 			randVal = (int)((Math.random()*1000)%1000+1)-500;
-			buildArray[k] = randVal;
+			tree[k] = randVal;
 			//this.insert(randVal);
 		}
-		tree = buildArray.clone();
+		//tree = buildArray.clone();
 		this.build_heap(tree);
 	}
 
@@ -210,11 +211,13 @@ public class HeapSortOperations
 	{
 		int k;
 		int temp[] = new int [tree.length];
-		for(k = tree.length; k>= 0; k--)
+		for(k = 0; k < temp.length-1 ; k++)
 		{
-			temp[k] = pop();
+			temp[k] = this.pop();
 		}
-		System.out.println("Sorted array = " + Arrays.toString(temp));
+		temp[k] = tree[0];
+		//System.out.println("Sorted array = " + Arrays.toString(temp));
+		tree = temp.clone();
 		
 	}
 	void build_heap(int[] arrayToHeap)
@@ -298,7 +301,6 @@ public class HeapSortOperations
 	int pop()
 	{
 		int[] tempAr = new int[tree.length-1];
-		timesPopped++;
 		load = this.getArLoad(tree);
 
 		//Assign top to element @ root

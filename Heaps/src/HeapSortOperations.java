@@ -203,7 +203,7 @@ public class HeapSortOperations
 			//Iterates through entire array
 			swap(arrayToSort,0,k);
 			load--;
-			maxHeap(arrayToSort,0);
+			minHeap(arrayToSort,0);
 		}
 	}
 	
@@ -230,11 +230,11 @@ public class HeapSortOperations
 		//the parent, maintains a min heap for every iteration
 		for(k = load/2; k >= 0; k--)
 		{
-			maxHeap(arrayToHeap, k);
+			minHeap(arrayToHeap, k);
 		}
 	}
 
-	void maxHeap(int[] arrayToHeap, int k) 
+	void minHeap(int[] arrayToHeap, int k) 
 	{
 		int left = 2*k+1;
 		int right = 2*k+2;
@@ -258,7 +258,7 @@ public class HeapSortOperations
 		if(min != k)
 		{
 			swap(arrayToHeap,k,min);
-			maxHeap(arrayToHeap,min);
+			minHeap(arrayToHeap,min);
 		}
 	}
 
@@ -277,7 +277,7 @@ public class HeapSortOperations
 		{	swap = false;
 			for(int k = arToSort.length-1; k > 0; k--)
 			{
-				if(arToSort[k] > arToSort[k-1])
+				if(arToSort[k] < arToSort[k-1])
 				{
 					temp          = arToSort[k];
 					arToSort[k]   = arToSort[k-1];

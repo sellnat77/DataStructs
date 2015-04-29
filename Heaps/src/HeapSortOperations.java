@@ -53,7 +53,7 @@ public class HeapSortOperations
 				System.out.println("Please enter a value to insert");
 				val = userIn.nextInt();
 				this.insert(val);
-				this.build_heap(tree);
+				//this.build_heap(tree);
 				break;
 			//Pop
 			case 3:
@@ -315,9 +315,10 @@ public class HeapSortOperations
 		}
 	}
 	void insert(int x)
-	{
-		int hole = getArLoad(tree); 
-		for(; hole > 1 && tree[hole/2] < x; hole /= 2)
+	{ 
+		int hole = getArLoad(tree);
+		
+		for(; tree[hole/2] < x; hole /= 2)
 		{
 			tree[hole] = tree[hole/2];
 		}

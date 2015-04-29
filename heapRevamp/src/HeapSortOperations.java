@@ -104,20 +104,6 @@ public class HeapSortOperations
 		}
 	}
 
-	void heapSortShow(int[] arrayToSort) 
-	{
-		int k;
-		
-		//builds the heap
-		build_heap(arrayToSort);
-		load = getArLoad(arrayToSort);
-		for(k = 1; k <= load; k++)
-		{
-			System.out.print(" " + pop());
-		}
-		
-	}
-
 	void checkTime(long timeTaken) 
 	{
 		if(timeTaken/10000 > 1000)
@@ -184,8 +170,8 @@ public class HeapSortOperations
 	
 		System.out.println("Running slow");
 		timeTaken = System.nanoTime();
-		bSort(temp1);
-		//Arrays.sort(temp1);
+		//bSort(temp1);
+		Arrays.sort(temp1);
 		//this.showTree(temp1);
 		timeTaken = System.nanoTime() - timeTaken;
 		this.checkTime(timeTaken);
@@ -214,6 +200,20 @@ public class HeapSortOperations
 		}
 	}
 	
+	void heapSortShow(int[] arrayToSort) 
+	{
+		int k;
+		
+		//builds the heap
+		build_heap(arrayToSort);
+		load = getArLoad(arrayToSort);
+		for(k = 1; k <= load; k++)
+		{
+			System.out.print(" " + pop());
+		}
+		
+	}
+
 	void build_heap(int[] arrayToHeap)
 	{
 		int k;

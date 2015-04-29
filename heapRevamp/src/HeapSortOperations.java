@@ -21,7 +21,7 @@ public class HeapSortOperations
 		System.out.println("8. Sort the heap using heap sort and bubble sort.");
 	}
 
-	public void getInput()
+	void getInput()
 	{
 		int val;
 		int selection = 0;
@@ -58,24 +58,25 @@ public class HeapSortOperations
 			//Pop
 			case 3:
 				load = this.getArLoad(tree);
-				if(tree.length == 1 )
+				/*
+				 * if(tree.length == 1 )
 				{
 					System.out.println("The value popped is : " + tree[0] + "\n\tThe tree is ");
 					System.out.println("Tree is empty now!");
 				}
 				else
 				{
+				*/
 					System.out.println("The value popped is : " + this.pop() + "\n\tThe tree is ");
-				}
+				/*}
 				this.build_heap(tree);
+				*/
 				this.showTree(tree);
 				break;
 			//Show Sorted
 			case 4:
 				System.out.println("\t\tThe sorted tree is : ");
-				//this.heapSort(tree);
-				this.popHeap();
-				this.showTree(tree);
+				this.heapSortShow(tree);
 				break;
 			//Init Rand + Sort
 			case 5:
@@ -103,6 +104,20 @@ public class HeapSortOperations
 		}
 	}
 
+	void heapSortShow(int[] arrayToSort) 
+	{
+		int k;
+		
+		//builds the heap
+		build_heap(arrayToSort);
+		load = getArLoad(arrayToSort);
+		for(k = 1; k <= load; k++)
+		{
+			System.out.print(" " + pop());
+		}
+		
+	}
+
 	void checkTime(long timeTaken) 
 	{
 		if(timeTaken/10000 > 1000)
@@ -118,9 +133,9 @@ public class HeapSortOperations
 	void treeInit(int val)
 	{
 		int k;
-		tree = new int[val];
+		tree = new int[val+1];
 		
-		for(k = 0; k < tree.length; k++)
+		for(k = 1; k < tree.length; k++)
 		{
 			tree[k] = 9999;
 		}
@@ -130,10 +145,10 @@ public class HeapSortOperations
 	{
 		int k;
 		int randVal = 0;
-		tree = new int[val];
+		tree = new int[val+1];
 		//buildArray = new int[val];
 		
-		for( k = 0; k < tree.length; k++)
+		for( k = 1; k < tree.length; k++)
 		{
 			//randVal = (int)((Math.random()*1)%1+1);
 			randVal = (int)((Math.random()*1000)%1000+1)-500;
@@ -152,11 +167,11 @@ public class HeapSortOperations
 		array = userIn.next();
 		
 		String[] temp = array.split("\\s*,\\s*");
-		tree = new int[temp.length];
+		tree = new int[temp.length+1];
 	
-		for(k = 0; k < tree.length; k++)
+		for(k = 0; k < temp.length; k++)
 		{
-			tree[k] = Integer.parseInt(temp[k]);
+			tree[k+1] = Integer.parseInt(temp[k]);
 		}
 		this.build_heap(tree);
 	}
@@ -192,33 +207,13 @@ public class HeapSortOperations
 		//builds the heap
 		build_heap(arrayToSort);
 		load = getArLoad(arrayToSort);
-		
-		for(k = load; k >= 0; k--)
+		for(k = 1; k <= load; k++)
 		{
-			//Starting at last element, moves it to the top
-			//swaps down to ensure min-heap
-			//Iterates through entire array
-			swap(arrayToSort,0,k);
-			load--;
-			minHeap(arrayToSort,0);
-			//maxHeap(arrayToSort,0);
-			//this.percolateDown(0);
+			pop();
+			//System.out.print(" " + pop());
 		}
 	}
 	
-	void popHeap()
-	{
-		int k;
-		int temp[] = new int [tree.length];
-		for(k = 0; k < temp.length-1 ; k++)
-		{
-			temp[k] = this.pop();
-		}
-		temp[k] = tree[0];
-		//System.out.println("Sorted array = " + Arrays.toString(temp));
-		tree = temp.clone();
-		
-	}
 	void build_heap(int[] arrayToHeap)
 	{
 		int k;
@@ -232,11 +227,11 @@ public class HeapSortOperations
 			minHeap(arrayToHeap, k);
 		}
 	}
-
+	
 	void minHeap(int[] arrayToHeap, int k) 
 	{
-		int left = 2*k+1;
-		int right = 2*k+2;
+		int left = 2*k;
+		int right = 2*k+1;
 		int min = k;
 		
 		//System.out.println("Left: "+left+ " Parent: " + k + " Right: " + right);
@@ -260,34 +255,7 @@ public class HeapSortOperations
 			minHeap(arrayToHeap,min);
 		}
 	}
-	void maxHeap(int[] arrayToHeap, int k) 
-	{
-		int left = 2*k+1;
-		int right = 2*k+2;
-		int max = k;
-		
-		//System.out.println("Left: "+left+ " Parent: " + k + " Right: " + right);
-		
-		if(left <= load && arrayToHeap[left] > arrayToHeap[k])
-		{
-			max = left;
-		}
-		else
-		{
-			max = k;
-		}
-		if(right <= load && arrayToHeap[right] > arrayToHeap[max])
-		{
-			max = right;
-		}
-		//Continuously swaps the current min to the parent position
-		if(max != k)
-		{
-			swap(arrayToHeap,k,max);
-			maxHeap(arrayToHeap,max);
-		}
-	}
-
+	
 	void swap(int[] arrayToHeap, int k, int min) 
 	{
 		int temp = arrayToHeap[k];
@@ -295,13 +263,13 @@ public class HeapSortOperations
 		arrayToHeap[min] = temp;
 	}
 
-	public void bSort(int[] arToSort)
+	void bSort(int[] arToSort)
 	{
 		int temp;
 		boolean swap = true;
 		while(swap)
 		{	swap = false;
-			for(int k = arToSort.length-1; k > 0; k--)
+			for(int k = arToSort.length-1; k > 1; k--)
 			{
 				if(arToSort[k] < arToSort[k-1])
 				{
@@ -316,45 +284,27 @@ public class HeapSortOperations
 	}
 	void insert(int x)
 	{ 
-		int hole = getArLoad(tree);
-		
-		//for(; tree[hole/2] < x; hole /= 2)
-		//{
-		//	tree[hole] = tree[hole/2];
-		//}
+		int hole = getArLoad(tree)+1;
+		System.out.println("Hole is " + hole);
+		for(; hole > 1 && tree[hole/2] > x; hole /= 2)
+		{
+			tree[hole] = tree[hole/2];
+		}
 		tree[hole] = x;
-		percolateUp();
 	}
 	
-	public void percolateUp() 
-	{
-		int index = getArLoad(tree);
-		int parent = (index/2)+1;
-		while(parent > 0 && tree[index] < tree[parent])
-		{
-			this.swap(tree, parent, index);
-			index = parent;
-			parent /= 2;
-		}
-		
-	}
 
 	int pop()
 	{
-		int[] tempAr = new int[tree.length-1];
 		load = this.getArLoad(tree);
-
 		//Assign top to element @ root
-		int top = tree[0];
+		int top = tree[1];
 		
 		//Reassign the root to the last element
-		tree[0] = tree[load];
-		load--;
-		tempAr = Arrays.copyOf(tree, tree.length-1);
-		tree = new int[tempAr.length];
-		tree = tempAr.clone();
+		tree[1] = tree[load];
+		//load--;
 		//Percolate the last element to where it belongs
-		percolateDown(0);
+		percolateDown(1);
 		return top;
 	}
 	
@@ -362,7 +312,7 @@ public class HeapSortOperations
 	{
 		int child;
 		int temp = tree[index];
-		for(; (child = 2*index+1) <= load; index = child)
+		for(; (child = 2*index) <= load; index = child)
 		{
 			
 			if(child != load && tree[child+1] < tree[child])
@@ -371,7 +321,6 @@ public class HeapSortOperations
 			}
 			if(tree[child] < temp)
 			{
-				//this.swap(tree, index, (child));
 				tree[index] = tree[child];
 			}
 			else
@@ -380,14 +329,15 @@ public class HeapSortOperations
 			}
 		}
 		tree[index] = temp;
-	}
+		}
+	
 	
 	int getArLoad(int[] array)
 	{
 		int k, count;
 		count = 0;
-		k = 0;
-		while(k < array.length-1)
+		k = 1;
+		while(k < array.length)
 		{
 			if(array[k] != 9999)
 			{
